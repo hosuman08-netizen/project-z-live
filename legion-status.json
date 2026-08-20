@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-20T08:41:51Z",
+  "updated": "2026-08-20T08:42:41Z",
   "brain": {
     "provider": "anthropic",
     "ok": true
@@ -148,7 +148,7 @@
       "note": ""
     },
     {
-      "run_id": "live-trinity-20260819-154249",
+      "run_id": "live-product-20260819-154249",
       "ts": "2026-08-19T06:42:49Z",
       "agent": "product",
       "status": "UNVERIFIED",
@@ -198,7 +198,7 @@
       "note": "agent"
     },
     {
-      "run_id": "live-trinity-20260814-213723",
+      "run_id": "live-product-20260814-213723",
       "ts": "2026-08-14T12:37:23Z",
       "agent": "product",
       "status": "UNVERIFIED",
