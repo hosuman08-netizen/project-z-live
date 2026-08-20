@@ -1,0 +1,156 @@
+{
+  "updated": "2026-08-20T05:04:53Z",
+  "brain": {
+    "provider": "anthropic",
+    "ok": true
+  },
+  "agents": [
+    {
+      "id": "graph",
+      "last_run": "2026-08-20T05:04:45Z",
+      "ok": true
+    },
+    {
+      "id": "jarvis",
+      "last_run": "2026-08-20T05:04:45Z",
+      "ok": true
+    },
+    {
+      "id": "trinity",
+      "last_run": "2026-08-20T05:04:45Z",
+      "ok": true
+    },
+    {
+      "id": "morpheus",
+      "last_run": "2026-08-20T05:04:45Z",
+      "ok": true
+    },
+    {
+      "id": "oracle",
+      "last_run": "2026-08-20T05:04:45Z",
+      "ok": true
+    }
+  ],
+  "runs": [
+    {
+      "ts": "2026-08-20T05:04:45Z",
+      "agent": "graph",
+      "ok": true,
+      "note": "orchestration"
+    },
+    {
+      "ts": "2026-08-20T05:04:45Z",
+      "agent": "oracle",
+      "ok": true,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T05:04:32Z",
+      "agent": "oracle",
+      "ok": false,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T05:04:20Z",
+      "agent": "oracle",
+      "ok": false,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T04:58:22Z",
+      "agent": "graph",
+      "ok": false,
+      "note": "orchestration"
+    },
+    {
+      "ts": "2026-08-20T04:58:22Z",
+      "agent": "oracle",
+      "ok": false,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T04:58:06Z",
+      "agent": "oracle",
+      "ok": false,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T04:57:53Z",
+      "agent": "oracle",
+      "ok": false,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T04:49:59Z",
+      "agent": "graph",
+      "ok": false,
+      "note": "orchestration"
+    },
+    {
+      "ts": "2026-08-20T04:49:59Z",
+      "agent": "oracle",
+      "ok": false,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T04:49:50Z",
+      "agent": "oracle",
+      "ok": false,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T04:49:39Z",
+      "agent": "oracle",
+      "ok": false,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T04:46:22Z",
+      "agent": "graph",
+      "ok": true,
+      "note": "orchestration"
+    },
+    {
+      "ts": "2026-08-20T04:46:22Z",
+      "agent": "oracle",
+      "ok": true,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T04:43:12Z",
+      "agent": "graph",
+      "ok": true,
+      "note": "orchestration"
+    },
+    {
+      "ts": "2026-08-20T04:43:12Z",
+      "agent": "oracle",
+      "ok": true,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T04:38:01Z",
+      "agent": "graph",
+      "ok": true,
+      "note": "orchestration"
+    },
+    {
+      "ts": "2026-08-20T04:38:01Z",
+      "agent": "oracle",
+      "ok": true,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T04:37:51Z",
+      "agent": "oracle",
+      "ok": false,
+      "note": "CDO"
+    },
+    {
+      "ts": "2026-08-20T04:37:39Z",
+      "agent": "oracle",
+      "ok": false,
+      "note": "CDO"
+    }
+  ]
+}

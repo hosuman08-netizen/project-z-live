@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROJECT Z — 군단 라이브</title>
+<meta name="description" content="1인 AI 군단 실가동 증명 — 실측 데이터 라이브 보드">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#070b18;--bg2:#0b1226;--card:rgba(22,31,66,.62);--card2:rgba(28,38,79,.7);
+    --line:rgba(106,166,255,.14);--line2:rgba(106,166,255,.28);
+    --txt:#eaeefc;--mut:#8b97c4;--dim:#5d6a99;
+    --grn:#3ddc97;--red:#ff5a5f;--blu:#6aa6ff;--pur:#b48bff;--gold:#ffc759;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',system-ui,sans-serif;
+    background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;
+  }
+  /* ── 배경 레이어 ── */
+  .bgfx{position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(900px 500px at 15% -5%,rgba(90,70,180,.28) 0%,transparent 60%),
+    radial-gradient(800px 500px at 90% 10%,rgba(40,90,200,.22) 0%,transparent 55%),
+    radial-gradient(700px 600px at 50% 110%,rgba(30,60,140,.25) 0%,transparent 60%),
+    var(--bg)}
+  .grid{position:fixed;inset:0;z-index:-1;opacity:.35;background-image:
+    linear-gradient(rgba(106,166,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(106,166,255,.05) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,#000 0%,transparent 100%)}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:28px 20px 60px}
+
+  /* ── 헤더 ── */
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:26px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{width:52px;height:52px;border-radius:14px;position:relative;flex:none;
+    background:linear-gradient(135deg,var(--pur),var(--blu));
+    display:grid;place-items:center;font-weight:900;font-size:24px;color:#0b1020;
+    box-shadow:0 0 24px rgba(122,140,255,.45),inset 0 0 12px rgba(255,255,255,.25)}
+  .logo::after{content:"";position:absolute;inset:-4px;border-radius:17px;border:1px solid rgba(150,160,255,.35);animation:ring 3s ease-in-out infinite}
+  @keyframes ring{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:.8;transform:scale(1.05)}}
+  h1{font-size:22px;letter-spacing:.5px}
+  h1 small{display:block;font-size:11px;color:var(--mut);letter-spacing:3px;font-weight:600;margin-top:3px}
+  .domain{font-size:11px;color:var(--dim);letter-spacing:1px;margin-top:2px}
+
+  .brain{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line2);
+    border-radius:14px;padding:11px 16px;font-size:13px;backdrop-filter:blur(8px);
+    box-shadow:0 4px 24px rgba(0,0,0,.35)}
+  .dot{width:11px;height:11px;border-radius:50%;background:var(--mut);flex:none}
+  .dot.on{background:var(--grn);animation:pulse 2s infinite}
+  .dot.off{background:var(--red);animation:pulse-r 1.4s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(61,220,151,.55)}70%{box-shadow:0 0 0 11px rgba(61,220,151,0)}100%{box-shadow:0 0 0 0 rgba(61,220,151,0)}}
+  @keyframes pulse-r{0%{box-shadow:0 0 0 0 rgba(255,90,95,.55)}70%{box-shadow:0 0 0 10px rgba(255,90,95,0)}100%{box-shadow:0 0 0 0 rgba(255,90,95,0)}}
+  .upd{font-size:11px;color:var(--mut);margin-top:2px}
+
+  /* ── 요약 스탯 ── */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;
+    backdrop-filter:blur(8px);position:relative;overflow:hidden;transition:border-color .3s}
+  .stat:hover{border-color:var(--line2)}
+  .stat::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--blu),transparent);opacity:.5}
+  .stat .k{font-size:11px;color:var(--mut);letter-spacing:1.5px;margin-bottom:7px;text-transform:uppercase}
+  .stat .v{font-size:26px;font-weight:800;letter-spacing:.5px;font-variant-numeric:tabular-nums}
+  .stat .v em{font-style:normal;font-size:13px;color:var(--dim);font-weight:600;margin-left:2px}
+  .stat.g .v{color:var(--grn)} .stat.b .v{color:var(--blu)} .stat.p .v{color:var(--pur)} .stat.gold .v{color:var(--gold)}
+
+  /* ── 메인 그리드 ── */
+  .grid2{display:grid;grid-template-columns:1.45fr 1fr;gap:14px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;
+    backdrop-filter:blur(10px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+  .panel h2{font-size:12px;letter-spacing:2px;color:var(--mut);margin-bottom:14px;text-transform:uppercase;
+    display:flex;align-items:center;gap:8px}
+  .panel h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+
+  /* 에이전트 카드 */
+  .desks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .desk{background:var(--card2);border:1px solid var(--line);border-radius:13px;padding:13px 15px;
+    position:relative;transition:transform .2s,border-color .2s,box-shadow .2s}
+  .desk:hover{transform:translateY(-2px);border-color:var(--line2);box-shadow:0 6px 20px rgba(0,0,0,.35)}
+  .desk .row1{display:flex;align-items:center;gap:9px}
+  .lt{width:9px;height:9px;border-radius:50%;flex:none;background:var(--mut);opacity:.35}
+  .lt.on{background:var(--grn);opacity:1;box-shadow:0 0 10px var(--grn);animation:pulse 2s infinite}
+  .lt.warn{background:var(--red);opacity:1;box-shadow:0 0 8px rgba(255,90,95,.6)}
+  .nm{font-weight:800;font-size:14px;letter-spacing:.4px}
+  .rl{font-size:11px;color:var(--mut);margin-top:4px;margin-left:18px}
+  .st{position:absolute;top:12px;right:13px;font-size:10px;padding:3px 9px;border-radius:20px;
+    background:rgba(139,151,196,.12);color:var(--mut);font-weight:700;letter-spacing:.5px}
+  .st.g{background:rgba(61,220,151,.15);color:var(--grn)}
+  .st.r{background:rgba(255,90,95,.15);color:var(--red)}
+
+  /* 실행 피드 */
+  .feed .it{display:flex;gap:12px;padding:10px 2px;border-bottom:1px solid var(--line);font-size:13px;line-height:1.55}
+  .feed .it:last-child{border-bottom:0}
+  .tl{flex:none;display:flex;flex-direction:column;align-items:center;padding-top:5px}
+  .tl .d{width:8px;height:8px;border-radius:50%;background:var(--grn);box-shadow:0 0 8px rgba(61,220,151,.5)}
+  .tl .d.bad{background:var(--red);box-shadow:0 0 8px rgba(255,90,95,.5)}
+  .tl .ln{width:1px;flex:1;background:var(--line);margin-top:4px}
+  .it:last-child .tl .ln{display:none}
+  .feed .tm{font-size:11px;color:var(--dim);margin-bottom:1px}
+  .feed b{letter-spacing:.3px}
+  .ok{color:var(--grn);font-weight:700} .bad{color:var(--red);font-weight:700}
+  .note-t{color:var(--mut)}
+
+  /* 푸터 */
+  .foot{margin-top:22px;text-align:center}
+  .foot .l1{font-size:11px;color:var(--mut);line-height:1.8}
+  .foot .l2{font-size:10px;color:var(--dim);letter-spacing:2px;margin-top:6px}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:var(--dim);
+    border:1px solid var(--line);border-radius:20px;padding:4px 12px;margin-top:12px;letter-spacing:1px}
+  .badge i{width:6px;height:6px;border-radius:50%;background:var(--grn);display:inline-block}
+
+  @media(max-width:840px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .grid2{grid-template-columns:1fr}
+    .desks{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:480px){.desks{grid-template-columns:1fr}.stat .v{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="bgfx"></div><div class="grid"></div>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">Z</div>
+      <div>
+        <h1>PROJECT Z <small>LEGION LIVE</small></h1>
+        <div class="domain">project-z.io · 1인 군단 실가동 증명</div>
+      </div>
+    </div>
+    <div class="brain">
+      <span class="dot" id="brainDot"></span>
+      <div><b id="brainTxt">상태 불러오는 중…</b><div class="upd" id="updated"></div></div>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat b"><div class="k">에이전트</div><div class="v" id="sAgents">–</div></div>
+    <div class="stat g"><div class="k">현재 가동</div><div class="v" id="sActive">–</div></div>
+    <div class="stat p"><div class="k">기록된 실행</div><div class="v" id="sRuns">–</div></div>
+    <div class="stat gold"><div class="k">성공률</div><div class="v" id="sRate">–</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="panel">
+      <h2>🏢 에이전트 데스크</h2>
+      <div class="desks" id="desks"><div class="rl">legion-status.json 대기중…</div></div>
+    </div>
+    <div class="panel feed">
+      <h2>⚡ 실행 타임라인 <span style="font-size:9px;letter-spacing:1px;color:var(--dim)">(실측)</span></h2>
+      <div id="runs"><div class="rl">데이터 대기중…</div></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="l1">이 보드는 legion-graph의 실제 실행 기록(runs)에서 자동 생성됩니다 — 연출 아님, 실측.<br>
+    실패 기록도 그대로 공개합니다. 정직 &gt; 연기.</div>
+    <div class="badge"><i></i> AUTO-SYNC 30MIN</div>
+    <div class="l2">PROJECT Z · NEO LEGION</div>
+  </div>
+</div>
+
+<script>
+const ROLES = {
+  trinity:"실행 · 코어", jarvis:"참모총장 · 조준", morpheus:"COO · 오케스트레이션",
+  oracle:"관측 · 검수", altman:"전략", plutus:"재무", niobe:"운영 · 납품",
+  graph:"본선 그래프", silas:"인텔", ghostwire:"정찰",
+  "guardian-atlas":"가디언", tank:"처리", jensen:"루프 엔지니어링"
+};
+function esc(s){return String(s??"").replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]))}
+function fmt(ts){ try{ const d=new Date(ts); return d.toLocaleString("ko-KR",{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"});}catch(e){return ts} }
+function rel(ts){
+  try{
+    const s = Math.floor((Date.now()-new Date(ts).getTime())/1000);
+    if(s<60) return "방금 전";
+    if(s<3600) return Math.floor(s/60)+"분 전";
+    if(s<86400) return Math.floor(s/3600)+"시간 전";
+    return Math.floor(s/86400)+"일 전";
+  }catch(e){return ""}
+}
+
+async function load(){
+  try{
+    const r = await fetch("./legion-status.json?t="+Date.now());
+    if(!r.ok) throw new Error("no feed");
+    const d = await r.json();
+
+    // brain
+    const on = d.brain && d.brain.ok;
+    document.getElementById("brainDot").className = "dot "+(on?"on":"off");
+    document.getElementById("brainTxt").textContent = on ? "두뇌 가동 중 · "+esc(d.brain.provider) : "두뇌 오프라인";
+    document.getElementById("updated").textContent = "갱신 "+fmt(d.updated)+" ("+rel(d.updated)+")";
+
+    const agents = d.agents||[], runs = d.runs||[];
+    const now = Date.now();
+
+    // stats
+    const fresh24 = a => a.last_run && (now - new Date(a.last_run).getTime()) < 864e5;
+    const active = agents.filter(a=>a.ok!==false && fresh24(a)).length;
+    const okRuns = runs.filter(x=>x.ok).length;
+    document.getElementById("sAgents").innerHTML = agents.length+'<em>명</em>';
+    document.getElementById("sActive").innerHTML = active+'<em>명</em>';
+    document.getElementById("sRuns").innerHTML = runs.length+'<em>건</em>';
+    document.getElementById("sRate").innerHTML = runs.length? Math.round(okRuns/runs.length*100)+'<em>%</em>' : "–";
+
+    // agents
+    const desks = agents.map(a=>{
+      const fresh = fresh24(a);
+      const lt = a.ok===false ? "warn" : (fresh ? "on" : "");
+      const st = a.ok===false ? '<span class="st r">오류</span>' : (fresh ? '<span class="st g">가동</span>' : '<span class="st">대기</span>');
+      return `<div class="desk"><div class="row1"><span class="lt ${lt}"></span><span class="nm">${esc(a.id)}</span></div><div class="rl">${esc(ROLES[a.id]||"에이전트")} · ${a.last_run?rel(a.last_run):"미소환"}</div>${st}</div>`;
+    }).join("");
+    document.getElementById("desks").innerHTML = desks || '<div class="rl">아직 소환 기록 없음</div>';
+
+    // runs timeline
+    const feed = runs.slice(0,12).map(x=>
+      `<div class="it"><div class="tl"><span class="d ${x.ok?'':'bad'}"></span><span class="ln"></span></div>
+       <div><div class="tm">${fmt(x.ts)} · ${rel(x.ts)}</div>
+       <b>${esc(x.agent)}</b> ${x.ok?'<span class="ok">성공</span>':'<span class="bad">실패</span>'}${x.note?' <span class="note-t">· '+esc(x.note)+'</span>':''}</div></div>`
+    ).join("");
+    document.getElementById("runs").innerHTML = feed || '<div class="rl">기록 없음</div>';
+  }catch(e){
+    document.getElementById("brainTxt").textContent = "피드 연결 대기중";
+    document.getElementById("updated").textContent = "legion-status.json 로드 실패";
+  }
+}
+load();
+setInterval(load, 5*60*1000);
+</script>
+</body>
+</html>

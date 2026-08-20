@@ -1,0 +1,180 @@
+#!/usr/bin/env bash
+# PROJECT Z — status JSON + (optional) commit/push if json changed
+# 모델 호출 없음. runs 원본·키 절대 커밋 안 함.
+set -euo pipefail
+export PATH="/Library/Frameworks/Python.framework/Versions/3.13/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:${HOME}/homebrew/bin:${HOME}/.local/bin:${PATH}"
+
+SITE="$(cd "$(dirname "$0")" && pwd)"
+RUNS="$HOME/legion/legion-graph/runs"
+GRAPH="$HOME/legion/legion-graph"
+OUT="$SITE/legion-status.json"
+LOG="$SITE/cron.log"
+
+ts_iso() { date -u +"%Y-%m-%dT%H:%M:%SZ"; }
+log() { printf '[%s] %s\n' "$(date '+%F %T')" "$*" >>"$LOG"; }
+
+# --- provider ---
+prov="unknown"
+brain_ok=false
+if status_out=$(cd "$GRAPH" && uv run legion-graph status 2>/dev/null); then
+  prov=$(printf '%s\n' "$status_out" | awk -F'= *' '/provider_resolved/{print $2; exit}')
+  [[ -z "$prov" ]] && prov=$(printf '%s\n' "$status_out" | awk -F'= *' '/provider_auto/{print $2; exit}')
+  key_line=$(printf '%s\n' "$status_out" | grep -E 'anthropic_key=|openai_key=' || true)
+  if printf '%s' "$key_line" | grep -q 'yes'; then brain_ok=true; fi
+  if [[ "$prov" == "ollama" ]]; then brain_ok=true; fi
+fi
+[[ -z "$prov" ]] && prov="unknown"
+
+# --- runs → json (python: no secrets, notes only) ---
+export RUNS OUT
+export BRAIN_PROV="$prov"
+export BRAIN_OK="$brain_ok"
+python3 <<'PY'
+import json, os, re, datetime
+from pathlib import Path
+
+runs_dir = Path(os.environ["RUNS"])
+out = Path(os.environ["OUT"])
+prov = os.environ.get("BRAIN_PROV") or "unknown"
+brain_ok = os.environ.get("BRAIN_OK") == "true"
+
+SKIP = {"LIVE_BOARD.json"}
+SECRET = re.compile(
+    r"(sk-[A-Za-z0-9_-]{8,}|lsv2_[A-Za-z0-9_]+|gho_[A-Za-z0-9]+|ghp_[A-Za-z0-9]+|"
+    r"AKIA[0-9A-Z]{8,}|api[_-]?key\s*[:=]\s*\S+|BOT_TOKEN|ANTHROPIC_API_KEY|"
+    r"OPENAI_API_KEY|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})",
+    re.I,
+)
+
+def iso_mtime(p: Path) -> str:
+    return datetime.datetime.fromtimestamp(p.stat().st_mtime, datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+def clean(s: str, n: int = 80) -> str:
+    s = SECRET.sub("[redacted]", s or "")
+    s = re.sub(r"\s+", " ", s).strip()
+    return s[:n]
+
+ROLE = {
+    "trinity": "CPO",
+    "jarvis": "CEO",
+    "morpheus": "COO",
+    "oracle": "CDO",
+    "silas": "research",
+    "ghostwire": "OSINT",
+    "tank": "architecture",
+    "jensen": "CWO",
+    "guardian-atlas": "guardian",
+    "graph": "orchestration",
+    "altman": "CTO",
+    "niobe": "CMO",
+    "plutus": "CFO",
+}
+
+def note_from(agent: str, ok: bool) -> str:
+    # page already renders 성공/실패 from ok. note = role only (no business memo).
+    return ROLE.get((agent or "").lower(), "agent")
+
+def ok_of(d: dict):
+    if isinstance(d.get("ok"), bool):
+        return d["ok"]
+    if isinstance(d.get("pass"), bool):
+        return d["pass"]
+    if str(d.get("verdict") or "").upper() == "FAIL":
+        return False
+    if str(d.get("status") or "").upper() in ("FAIL", "FAILED", "ERROR"):
+        return False
+    if str(d.get("status") or "").upper() in ("OK", "PASS", "DONE"):
+        return True
+    return True  # live summon without ok field: treat as completed call
+
+def agent_of(p: Path, d: dict) -> str:
+    a = d.get("agent") or d.get("id")
+    if isinstance(a, str) and a.strip() and a not in ("graph",):
+        return a.strip()[:40]
+    name = p.stem
+    m = re.match(r"live-([a-z0-9_-]+)-", name, re.I)
+    if m:
+        return m.group(1)
+    if name.startswith("hardcheck"):
+        return "oracle"
+    if name.startswith("graph"):
+        return "graph"
+    return name[:40]
+
+files = [p for p in runs_dir.glob("*.json") if p.name not in SKIP]
+files.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+files = files[:20]
+
+runs = []
+agents = {}
+for p in files:
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+        if not isinstance(d, dict):
+            continue
+    except Exception:
+        continue
+    ts = d.get("updated") or d.get("started") or d.get("finished") or iso_mtime(p)
+    if not isinstance(ts, str) or "T" not in ts:
+        ts = iso_mtime(p)
+    agent = agent_of(p, d)
+    ok = bool(ok_of(d))
+    note = note_from(agent, ok)
+    runs.append({"ts": ts, "agent": agent, "ok": ok, "note": note})
+    prev = agents.get(agent)
+    if not prev or ts >= prev["last_run"]:
+        agents[agent] = {"id": agent, "last_run": ts, "ok": bool(ok)}
+    # graph runs also stamp core seats if present (never overwrite a newer run)
+    if p.stem.startswith("graph"):
+        for seat in ("jarvis", "trinity", "morpheus", "oracle"):
+            if seat in d and isinstance(d[seat], str) and d[seat].strip():
+                prev = agents.get(seat)
+                if not prev or ts >= prev["last_run"]:
+                    agents[seat] = {"id": seat, "last_run": ts, "ok": bool(ok)}
+
+agent_list = list(agents.values())
+agent_list.sort(key=lambda a: a.get("last_run") or "", reverse=True)
+
+payload = {
+    "updated": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    "brain": {"provider": prov, "ok": brain_ok},
+    "agents": agent_list,
+    "runs": runs,
+}
+if out.exists():
+    try:
+        old = json.loads(out.read_text(encoding="utf-8"))
+        if (
+            old.get("brain") == payload["brain"]
+            and old.get("agents") == payload["agents"]
+            and old.get("runs") == payload["runs"]
+        ):
+            print(str(out) + " unchanged")
+            raise SystemExit(0)
+    except SystemExit:
+        raise
+    except Exception:
+        pass
+out.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+print(str(out))
+PY
+
+# --- git: json changed only ---
+if [[ ! -d "$SITE/.git" ]]; then
+  log "json written, no git repo yet"
+  exit 0
+fi
+cd "$SITE"
+git add -A -- legion-status.json >/dev/null 2>&1 || true
+if git diff --cached --quiet -- legion-status.json 2>/dev/null; then
+  log "no json change"
+  git reset -q HEAD -- legion-status.json 2>/dev/null || true
+  exit 0
+fi
+git commit -q -m "status $(ts_iso)" -- legion-status.json
+if git push -q origin HEAD 2>>"$LOG"; then
+  log "pushed status"
+else
+  log "push FAIL"
+  exit 1
+fi

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>군단에 일 맡기기 — PROJECT Z</title>
+<meta name="description" content="실가동 AI 군단이 만드는 팔리는 카피 — 상세페이지·블로그·웹3 한글 콘텐츠. 24시간 납품.">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#070b18;--card:rgba(22,31,66,.62);--card2:rgba(28,38,79,.7);
+    --line:rgba(106,166,255,.14);--line2:rgba(106,166,255,.28);
+    --txt:#eaeefc;--mut:#8b97c4;--dim:#5d6a99;
+    --grn:#3ddc97;--blu:#6aa6ff;--pur:#b48bff;--gold:#ffc759;
+  }
+  body{font-family:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',system-ui,sans-serif;
+    background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+  .bgfx{position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(900px 500px at 15% -5%,rgba(90,70,180,.28) 0%,transparent 60%),
+    radial-gradient(800px 500px at 90% 10%,rgba(40,90,200,.22) 0%,transparent 55%),
+    var(--bg)}
+  .grid{position:fixed;inset:0;z-index:-1;opacity:.35;background-image:
+    linear-gradient(rgba(106,166,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(106,166,255,.05) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,#000 0%,transparent 100%)}
+  .wrap{max-width:960px;margin:0 auto;padding:28px 20px 70px}
+
+  nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px}
+  .back{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--mut);font-size:13px;transition:color .2s}
+  .back:hover{color:var(--txt)}
+  .logo-s{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--pur),var(--blu));
+    display:grid;place-items:center;font-weight:900;font-size:16px;color:#0b1020;
+    box-shadow:0 0 16px rgba(122,140,255,.4)}
+  .live-link{font-size:12px;color:var(--blu);text-decoration:none;border:1px solid var(--line2);
+    border-radius:20px;padding:7px 16px;transition:all .2s}
+  .live-link:hover{background:rgba(106,166,255,.1)}
+
+  .hero{text-align:center;margin-bottom:46px}
+  .hero h1{font-size:34px;line-height:1.3;letter-spacing:-.5px}
+  .hero h1 span{background:linear-gradient(90deg,var(--pur),var(--blu));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--mut);font-size:15px;margin-top:14px;line-height:1.7}
+  .hero .proof{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:12px;color:var(--grn);
+    border:1px solid rgba(61,220,151,.25);border-radius:20px;padding:7px 16px;text-decoration:none}
+  .hero .proof i{width:7px;height:7px;border-radius:50%;background:var(--grn);display:inline-block;
+    animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(61,220,151,.5)}70%{box-shadow:0 0 0 8px rgba(61,220,151,0)}100%{box-shadow:0 0 0 0 rgba(61,220,151,0)}}
+
+  h2.sec{font-size:13px;letter-spacing:2px;color:var(--mut);text-transform:uppercase;margin:44px 0 16px;
+    display:flex;align-items:center;gap:10px}
+  h2.sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+
+  .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .sv{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;
+    backdrop-filter:blur(8px);transition:transform .2s,border-color .2s}
+  .sv:hover{transform:translateY(-3px);border-color:var(--line2)}
+  .sv .ic{font-size:24px;margin-bottom:10px}
+  .sv h3{font-size:16px;margin-bottom:8px}
+  .sv p{font-size:13px;color:var(--mut);line-height:1.65}
+
+  table.price{width:100%;border-collapse:collapse;background:var(--card);border-radius:16px;overflow:hidden;
+    border:1px solid var(--line);font-size:13px}
+  .price th{background:rgba(106,166,255,.08);padding:12px 14px;text-align:left;font-size:12px;
+    letter-spacing:1px;color:var(--mut)}
+  .price td{padding:12px 14px;border-top:1px solid var(--line);line-height:1.6}
+  .price .hl{color:var(--gold);font-weight:800}
+  .tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:12px;
+    background:rgba(180,139,255,.15);color:var(--pur);font-weight:700;margin-left:6px}
+
+  .samples{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .smp{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:17px 18px}
+  .smp .cat{font-size:11px;color:var(--blu);letter-spacing:1px;margin-bottom:7px;font-weight:700}
+  .smp h4{font-size:15px;margin-bottom:8px;line-height:1.45}
+  .smp p{font-size:12.5px;color:var(--mut);line-height:1.7}
+
+  .how{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .hw{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px;text-align:center}
+  .hw .n{width:26px;height:26px;border-radius:50%;background:rgba(106,166,255,.15);color:var(--blu);
+    display:grid;place-items:center;font-weight:800;font-size:13px;margin:0 auto 9px}
+  .hw b{font-size:13px;display:block;margin-bottom:5px}
+  .hw span{font-size:11px;color:var(--mut);line-height:1.5;display:block}
+
+  .cta{margin-top:50px;text-align:center;background:var(--card);border:1px solid var(--line2);
+    border-radius:20px;padding:36px 24px;position:relative;overflow:hidden}
+  .cta::before{content:"";position:absolute;top:0;left:20%;right:20%;height:2px;
+    background:linear-gradient(90deg,transparent,var(--blu),transparent)}
+  .cta h3{font-size:21px;margin-bottom:10px}
+  .cta p{color:var(--mut);font-size:13px;margin-bottom:22px;line-height:1.7}
+  .btn{display:inline-block;text-decoration:none;font-weight:800;font-size:15px;color:#0b1020;
+    background:linear-gradient(90deg,var(--gold),#ffdf9e);border-radius:14px;padding:14px 34px;
+    box-shadow:0 6px 24px rgba(255,199,89,.3);transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .cta .sub{font-size:11px;color:var(--dim);margin-top:14px}
+
+  .foot{margin-top:40px;text-align:center;font-size:11px;color:var(--dim);line-height:1.8}
+  .foot a{color:var(--mut);text-decoration:none}
+
+  @media(max-width:760px){
+    .svc{grid-template-columns:1fr}.samples{grid-template-columns:1fr}
+    .how{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:26px}
+  }
+</style>
+</head>
+<body>
+<div class="bgfx"></div><div class="grid"></div>
+<div class="wrap">
+  <nav>
+    <a class="back" href="/"><span class="logo-s">Z</span> PROJECT Z</a>
+    <a class="live-link" href="/">📡 군단 라이브 보드 보기</a>
+  </nav>
+
+  <div class="hero">
+    <h1>실제로 돌아가는 AI 군단이<br><span>팔리는 카피</span>를 만듭니다</h1>
+    <p>상세페이지 · 블로그 · 웹3 한글 콘텐츠 — 24시간 안에.<br>말로만 하는 AI가 아닙니다. 실행 기록을 전부 공개합니다.</p>
+    <a class="proof" href="/"><i></i> 지금 이 순간의 군단 가동 상태 보기</a>
+  </div>
+
+  <h2 class="sec">서비스</h2>
+  <div class="svc">
+    <div class="sv"><div class="ic">🛒</div><h3>상세페이지 카피</h3>
+      <p>후킹 헤드라인 → 공감 → 특징 → 신뢰 → 구매유도. 스마트스토어·쿠팡·자사몰 상세페이지를 팔리는 구조로 씁니다.</p></div>
+    <div class="sv"><div class="ic">✍️</div><h3>블로그 · SEO 글</h3>
+      <p>검색에 걸리고 끝까지 읽히는 글. 키워드 설계부터 본문까지, 브랜드 톤에 맞춰 제작합니다.</p></div>
+    <div class="sv"><div class="ic">🌐</div><h3>웹3 한글 콘텐츠</h3>
+      <p>공지·스레드·문서를 번역투 없는 크립토 네이티브 한국어로. 해외 프로젝트의 한국 커뮤니티를 삽니다.</p></div>
+  </div>
+
+  <h2 class="sec">가격</h2>
+  <table class="price">
+    <tr><th>플랜</th><th>내용</th><th>가격</th></tr>
+    <tr><td><b>STANDARD</b></td><td>상세페이지 카피 1건 · 수정 2회 · 2일</td><td class="hl">₩29,000</td></tr>
+    <tr><td><b>DELUXE</b><span class="tag">인기</span></td><td>상세페이지 + 블로그 1건 · 수정 최대 15회 · 2일</td><td class="hl">₩49,000</td></tr>
+    <tr><td><b>PREMIUM</b></td><td>상세페이지 + 블로그 + 인스타 캡션 세트 · 수정 최대 15회 · 3일</td><td class="hl">₩79,000</td></tr>
+    <tr><td><b>WEB3</b></td><td>공지·스레드 한글화 5건부터 · 주간/월간 패키지 별도 협의</td><td class="hl">$100~</td></tr>
+  </table>
+
+  <h2 class="sec">샘플 미리보기</h2>
+  <div class="samples">
+    <div class="smp"><div class="cat">🐕 반려동물</div><h4>"소파에서 뛰어내리는 그 순간이, 관절에는 사고입니다"</h4>
+      <p>공포 소구 → 원인 설명 → 제품이 끊는 지점 → 후기 신뢰. 반려동물 계단 상세페이지 풀버전 보유.</p></div>
+    <div class="smp"><div class="cat">🧶 패션·의류</div><h4>"예쁜데 목이 늘어나는" 니트, 이제 그만</h4>
+      <p>누구나 겪은 불편 → 이중 리브 편직이라는 근거 → 4계절 활용성. 기능성 소재를 일상 언어로.</p></div>
+    <div class="smp"><div class="cat">💊 건강기능식품</div><h4>아침마다 화장실이 불편하다면, 균부터 바꾸세요</h4>
+      <p>표시광고법 준수 톤("도움을 줄 수 있음") 유지하면서도 팔리는 구조. 장용성 코팅·CFU 보장 등 근거 중심.</p></div>
+    <div class="smp"><div class="cat">💧 뷰티</div><h4>겉만 촉촉, 속은 당기는 피부에게</h4>
+      <p>30분 뒤 당김이라는 구체적 순간 포착 → 5중 히알루론산 근거 → 민감성 테스트 신뢰 장치.</p></div>
+  </div>
+
+  <h2 class="sec">진행 방식</h2>
+  <div class="how">
+    <div class="hw"><div class="n">1</div><b>주문·요청서</b><span>상품 정보와 톤을 요청 양식으로 받습니다</span></div>
+    <div class="hw"><div class="n">2</div><b>군단 제작</b><span>에이전트 초안 → 사람 검수 이중 구조</span></div>
+    <div class="hw"><div class="n">3</div><b>24시간 납품</b><span>표준 1건 기준, 세트는 2~3일</span></div>
+    <div class="hw"><div class="n">4</div><b>수정 보장</b><span>플랜별 최대 15회까지 무상 수정</span></div>
+  </div>
+
+  <div class="cta">
+    <h3>첫 문장이 매출을 바꿉니다</h3>
+    <p>업종만 알려주시면 해당 업종 샘플을 바로 보여드립니다.<br>주문과 결제는 크몽에서 안전하게.</p>
+    <a class="btn" href="https://kmong.com/@mark66888" target="_blank" rel="noopener">크몽에서 주문하기 →</a>
+    <div class="sub">결제·환불은 크몽 정책을 따릅니다 · 효능 단정 등 법적 금지 표현은 쓰지 않습니다</div>
+  </div>
+
+  <div class="foot">
+    이 서비스는 <a href="/">실가동 중인 AI 군단</a>이 만듭니다 — 실행 기록 전부 공개 · 정직 &gt; 연기<br>
+    PROJECT Z · NEO LEGION
+  </div>
+</div>
+</body>
+</html>
