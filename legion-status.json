@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-20T08:21:44Z",
+  "updated": "2026-08-20T08:41:51Z",
   "brain": {
     "provider": "anthropic",
     "ok": true
@@ -8,149 +8,404 @@
     {
       "id": "core-graph",
       "last_run": "2026-08-20T05:04:45Z",
-      "ok": true
-    },
-    {
-      "id": "chief-of-staff",
-      "last_run": "2026-08-20T05:04:45Z",
-      "ok": true
+      "status": "UNVERIFIED",
+      "ok": false
     },
     {
       "id": "product",
-      "last_run": "2026-08-20T05:04:45Z",
-      "ok": true
+      "last_run": "2026-08-19T06:42:49Z",
+      "status": "UNVERIFIED",
+      "ok": false
     },
     {
-      "id": "ops",
-      "last_run": "2026-08-20T05:04:45Z",
-      "ok": true
+      "id": "research",
+      "last_run": "2026-08-14T12:49:35Z",
+      "status": "UNVERIFIED",
+      "ok": false
     },
     {
-      "id": "audit",
-      "last_run": "2026-08-20T05:04:45Z",
-      "ok": true
+      "id": "osint",
+      "last_run": "2026-08-14T12:47:33Z",
+      "status": "UNVERIFIED",
+      "ok": false
+    },
+    {
+      "id": "guardian",
+      "last_run": "2026-08-14T12:36:30Z",
+      "status": "UNVERIFIED",
+      "ok": false
+    },
+    {
+      "id": "architecture",
+      "last_run": "2026-08-14T12:36:02Z",
+      "status": "UNVERIFIED",
+      "ok": false
+    },
+    {
+      "id": "compute",
+      "last_run": "2026-08-14T12:33:57Z",
+      "status": "UNVERIFIED",
+      "ok": false
+    },
+    {
+      "id": "checker-general",
+      "last_run": "2026-08-13T14:02:52Z",
+      "status": "UNVERIFIED",
+      "ok": false
+    },
+    {
+      "id": "both",
+      "last_run": "2026-08-13T12:43:25Z",
+      "status": "UNVERIFIED",
+      "ok": false
+    },
+    {
+      "id": "crew",
+      "last_run": "2026-08-13T12:28:03Z",
+      "status": "UNVERIFIED",
+      "ok": false
     }
   ],
   "runs": [
     {
+      "run_id": "graph-20260820-140445",
       "ts": "2026-08-20T05:04:45Z",
       "agent": "core-graph",
-      "ok": true,
-      "note": ""
-    },
-    {
-      "ts": "2026-08-20T05:04:45Z",
-      "agent": "audit",
-      "ok": true,
-      "note": ""
-    },
-    {
-      "ts": "2026-08-20T05:04:32Z",
-      "agent": "audit",
+      "status": "UNVERIFIED",
       "ok": false,
+      "hardcheck": "PASS",
+      "evidence_count": 0,
       "note": ""
     },
     {
-      "ts": "2026-08-20T05:04:20Z",
-      "agent": "audit",
-      "ok": false,
-      "note": ""
-    },
-    {
+      "run_id": "graph-20260820-135822",
       "ts": "2026-08-20T04:58:22Z",
       "agent": "core-graph",
+      "status": "UNVERIFIED",
       "ok": false,
+      "hardcheck": "FAIL",
+      "evidence_count": 0,
       "note": ""
     },
     {
-      "ts": "2026-08-20T04:58:22Z",
-      "agent": "audit",
-      "ok": false,
-      "note": ""
-    },
-    {
-      "ts": "2026-08-20T04:58:06Z",
-      "agent": "audit",
-      "ok": false,
-      "note": ""
-    },
-    {
-      "ts": "2026-08-20T04:57:53Z",
-      "agent": "audit",
-      "ok": false,
-      "note": ""
-    },
-    {
+      "run_id": "graph-20260820-134959",
       "ts": "2026-08-20T04:49:59Z",
       "agent": "core-graph",
+      "status": "UNVERIFIED",
       "ok": false,
+      "hardcheck": "FAIL",
+      "evidence_count": 0,
       "note": ""
     },
     {
-      "ts": "2026-08-20T04:49:59Z",
-      "agent": "audit",
-      "ok": false,
-      "note": ""
-    },
-    {
-      "ts": "2026-08-20T04:49:50Z",
-      "agent": "audit",
-      "ok": false,
-      "note": ""
-    },
-    {
-      "ts": "2026-08-20T04:49:39Z",
-      "agent": "audit",
-      "ok": false,
-      "note": ""
-    },
-    {
+      "run_id": "graph-20260820-134622",
       "ts": "2026-08-20T04:46:22Z",
       "agent": "core-graph",
-      "ok": true,
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "PASS",
+      "evidence_count": 0,
       "note": ""
     },
     {
-      "ts": "2026-08-20T04:46:22Z",
-      "agent": "audit",
-      "ok": true,
-      "note": ""
-    },
-    {
+      "run_id": "graph-20260820-134312",
       "ts": "2026-08-20T04:43:12Z",
       "agent": "core-graph",
-      "ok": true,
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "PASS",
+      "evidence_count": 0,
       "note": ""
     },
     {
-      "ts": "2026-08-20T04:43:12Z",
-      "agent": "audit",
-      "ok": true,
-      "note": ""
-    },
-    {
+      "run_id": "graph-20260820-133801",
       "ts": "2026-08-20T04:38:01Z",
       "agent": "core-graph",
-      "ok": true,
-      "note": ""
-    },
-    {
-      "ts": "2026-08-20T04:38:01Z",
-      "agent": "audit",
-      "ok": true,
-      "note": ""
-    },
-    {
-      "ts": "2026-08-20T04:37:51Z",
-      "agent": "audit",
+      "status": "UNVERIFIED",
       "ok": false,
+      "hardcheck": "PASS",
+      "evidence_count": 0,
       "note": ""
     },
     {
-      "ts": "2026-08-20T04:37:39Z",
-      "agent": "audit",
+      "run_id": "graph-20260820-133711",
+      "ts": "2026-08-20T04:37:11Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
       "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
       "note": ""
+    },
+    {
+      "run_id": "graph-20260820-133549",
+      "ts": "2026-08-20T04:35:49Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "FAIL",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "live-trinity-20260819-154249",
+      "ts": "2026-08-19T06:42:49Z",
+      "agent": "product",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-20260819-140541",
+      "ts": "2026-08-19T05:05:41Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "FAIL",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-20260819-135845",
+      "ts": "2026-08-19T04:58:45Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "FAIL",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "live-silas-20260814-214935",
+      "ts": "2026-08-14T12:49:35Z",
+      "agent": "research",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": "agent"
+    },
+    {
+      "run_id": "live-ghostwire-20260814-214733",
+      "ts": "2026-08-14T12:47:33Z",
+      "agent": "osint",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": "agent"
+    },
+    {
+      "run_id": "live-trinity-20260814-213723",
+      "ts": "2026-08-14T12:37:23Z",
+      "agent": "product",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "live-guardian-atlas-20260814-213630",
+      "ts": "2026-08-14T12:36:30Z",
+      "agent": "guardian",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": "agent"
+    },
+    {
+      "run_id": "live-tank-20260814-213602",
+      "ts": "2026-08-14T12:36:02Z",
+      "agent": "architecture",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": "agent"
+    },
+    {
+      "run_id": "live-jensen-20260814-213357",
+      "ts": "2026-08-14T12:33:57Z",
+      "agent": "compute",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": "agent"
+    },
+    {
+      "run_id": "graph-20260814-212651",
+      "ts": "2026-08-14T12:26:51Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "FAIL",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-20260814-013231",
+      "ts": "2026-08-13T16:32:31Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-20260814-004138",
+      "ts": "2026-08-13T15:41:38Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "FAIL",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-20260814-002853",
+      "ts": "2026-08-13T15:28:53Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "FAIL",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-live-20260814-002216",
+      "ts": "2026-08-13T15:22:16Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-20260814-002047",
+      "ts": "2026-08-13T15:20:47Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "PASS",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-live-20260814-002030",
+      "ts": "2026-08-13T15:20:30Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-20260814-001719",
+      "ts": "2026-08-13T15:17:19Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-live-20260813-231419",
+      "ts": "2026-08-13T14:14:19Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-20260813-231005",
+      "ts": "2026-08-13T14:10:05Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "live-checker-general-20260813-230252",
+      "ts": "2026-08-13T14:02:52Z",
+      "agent": "checker-general",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": "agent"
+    },
+    {
+      "run_id": "graph-20260813-230226",
+      "ts": "2026-08-13T14:02:26Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "graph-20260813-230207",
+      "ts": "2026-08-13T14:02:07Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "both-20260813-214325",
+      "ts": "2026-08-13T12:43:25Z",
+      "agent": "both",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": "agent"
+    },
+    {
+      "run_id": "crew-20260813-212803",
+      "ts": "2026-08-13T12:28:03Z",
+      "agent": "crew",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": "agent"
+    },
+    {
+      "run_id": "graph-20260813-212803",
+      "ts": "2026-08-13T12:28:03Z",
+      "agent": "core-graph",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": ""
+    },
+    {
+      "run_id": "both-20260813-212802",
+      "ts": "2026-08-13T12:28:02Z",
+      "agent": "both",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": "agent"
     }
   ]
 }
