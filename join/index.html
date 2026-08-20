@@ -107,16 +107,16 @@ body.ko-on span.ko{display:inline}
 </nav>
 
 <div class="hero">
-  <span class="eyebrow">Z GUILD · WAITLIST</span>
+  <span class="eyebrow">OPEN · ANYONE IN AI</span>
   <div class="en">
-    <h1>You already have a team.<br><span>Bring your legion.</span></h1>
-    <p class="sub">A guild for digital nomads who run AI agent legions.<br>
-    We don't trust résumés. We trust <b>contracts and evidence</b>.</p>
+    <h1>If you touch AI,<br><span>you can come in.</span></h1>
+    <p class="sub">Builders, researchers, operators, artists — no résumé, no waitlist.<br>
+    Make an account and you're in the community.</p>
   </div>
   <div class="ko">
-    <h1>당신은 이미 팀을 갖고 있다.<br><span>군단을 데리고 오라.</span></h1>
-    <p class="sub">AI 에이전트 군단을 부리는 디지털 노마드들의 길드.<br>
-    이력서를 믿지 않습니다. <b>계약과 증거</b>를 믿습니다.</p>
+    <h1>AI 하는 사람은<br><span>지금 들어와.</span></h1>
+    <p class="sub">개발 · 연구 · 운용 · 창작 · 관심만 있어도 된다.<br>
+    심사·대기자 없음. 계정 만들면 커뮤부터.</p>
   </div>
 </div>
 
@@ -143,9 +143,9 @@ body.ko-on span.ko{display:inline}
   <div class="rm"><span class="st soon">SOON</span><b>🏪 Market</b>
     <p class="en">Sell your products, agent templates and playbooks.</p>
     <p class="ko">내 제품·에이전트 템플릿·플레이북을 판다.</p></div>
-  <div class="rm"><span class="st soon">SOON</span><b>🏛 Plaza</b>
-    <p class="en">Build in public, find crew for the next raid.</p>
-    <p class="ko">오늘 지은 걸 공유하고, 다음 레이드 동료를 찾는다.</p></div>
+  <div class="rm"><span class="st live">LIVE</span><b>🏛 Plaza</b>
+    <p class="en">The community is open. Post, reply, follow.</p>
+    <p class="ko">커뮤 열림. 글·댓글·팔로우.</p></div>
   <div class="rm"><span class="st live">LIVE</span><b>📚 Archive</b>
     <p class="en">Build logs and verified playbooks. Failures included.</p>
     <p class="ko">빌드 로그와 검증된 플레이북. 실패 기록 포함.</p></div>
@@ -172,20 +172,18 @@ body.ko-on span.ko{display:inline}
 
 <div class="cta">
   <div class="en">
-    <h3>The doors aren't open yet.</h3>
-    <p>We're the first proof case — our own legion runs in public at project-z.io.<br>
-    Founding members get in first when the Quest Hall opens.</p>
+    <h3>The door is open.</h3>
+    <p>Anyone in AI — make a handle and walk in. Community first, legion optional.</p>
   </div>
   <div class="ko">
-    <h3>아직 문은 열리지 않았습니다.</h3>
-    <p>우리가 1호 증명 사례입니다 — 우리 군단이 project-z.io에서 공개로 돌고 있습니다.<br>
-    퀘스트홀이 열릴 때 창립 멤버가 먼저 들어옵니다.</p>
+    <h3>문은 열려 있다.</h3>
+    <p>AI 관련이면 핸들 만들고 바로 입장. 커뮤가 먼저, 군단은 있어도 되고 없어도 된다.</p>
   </div>
-  <a class="btn" id="joinBtn" href="https://tally.so/r/1AQp7Q" target="_blank" rel="noopener">
-    <span class="en">Join the waitlist →</span><span class="ko">대기자 명단 등록 →</span></a>
+  <a class="btn" id="joinBtn" href="https://z-operator.pages.dev/login/?m=signup">
+    <span class="en">Create a free account →</span><span class="ko">무료로 들어가기 →</span></a>
   <div class="fine">
-    <span class="en">Email only. No spam, no newsletter — one message when the doors open.</span>
-    <span class="ko">이메일만 받습니다. 스팸·뉴스레터 없음 — 문 열릴 때 한 통.</span>
+    <span class="en">No waitlist. Email + password. Your handle is public; your email is not.</span>
+    <span class="ko">대기자 없음. 이메일+비밀번호. 핸들만 공개, 메일은 안 보임.</span>
   </div>
 </div>
 
@@ -209,13 +207,9 @@ body.ko-on span.ko{display:inline}
 </div>
 <script>
 // 폼 주소는 배선 후 교체 (Tally/Google Form 등)
-var FORM_URL="https://tally.so/r/1AQp7Q";
-document.getElementById("joinBtn").addEventListener("click",function(e){
-  if(!FORM_URL){e.preventDefault();
-    alert(document.body.classList.contains("ko-on")
-      ? "대기자 폼 연결 예정입니다. 곧 열립니다."
-      : "Waitlist form is being wired up. Opening soon.");}
-  else{this.href=FORM_URL;}
+var FORM_URL="https://z-operator.pages.dev/login/?m=signup";
+document.getElementById("joinBtn").addEventListener("click",function(){
+  this.href=FORM_URL;
 });
 if((navigator.language||"").toLowerCase().startsWith("ko"))document.body.classList.add("ko-on");
 </script>
