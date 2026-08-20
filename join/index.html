@@ -73,6 +73,7 @@ h2.sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(
  background:linear-gradient(90deg,var(--gold),#ffdf9e);border-radius:14px;padding:15px 38px;
  box-shadow:0 6px 26px rgba(255,199,89,.28);transition:transform .15s}
 .btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--blu);border:1px solid var(--line2);box-shadow:none;margin-top:12px;padding:12px 28px;font-size:14px}
 .cta .fine{font-size:11px;color:var(--dim);margin-top:16px;line-height:1.7}
 
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:40px}
@@ -179,11 +180,14 @@ body.ko-on span.ko{display:inline}
     <h3>문은 열려 있다.</h3>
     <p>AI 관련이면 핸들 만들고 바로 입장. 커뮤가 먼저, 군단은 있어도 되고 없어도 된다.</p>
   </div>
-  <a class="btn" id="joinBtn" href="https://z-operator.pages.dev/login/?m=signup">
-    <span class="en">Create a free account →</span><span class="ko">무료로 들어가기 →</span></a>
+  <a class="btn" id="joinBtn" href="https://tally.so/r/1AQp7Q" target="_blank" rel="noopener">
+    <span class="en">Join the global waitlist →</span><span class="ko">글로벌 대기 등록 →</span></a>
+  <div>
+    <a class="btn ghost" href="https://app.project-z.io/login/?m=signup">Create account now →</a>
+  </div>
   <div class="fine">
-    <span class="en">No waitlist. Email + password. Your handle is public; your email is not.</span>
-    <span class="ko">대기자 없음. 이메일+비밀번호. 핸들만 공개, 메일은 안 보임.</span>
+    <span class="en">Waitlist = global. Account = community now. Handle is public; email is not.</span>
+    <span class="ko">대기자=글로벌용. 계정=지금 커뮤. 핸들만 공개, 메일은 안 보임.</span>
   </div>
 </div>
 
@@ -207,7 +211,7 @@ body.ko-on span.ko{display:inline}
 </div>
 <script>
 // 폼 주소는 배선 후 교체 (Tally/Google Form 등)
-var FORM_URL="https://z-operator.pages.dev/login/?m=signup";
+var FORM_URL="https://tally.so/r/1AQp7Q";
 document.getElementById("joinBtn").addEventListener("click",function(){
   this.href=FORM_URL;
 });
