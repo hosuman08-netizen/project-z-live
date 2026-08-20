@@ -54,25 +54,40 @@ def clean(s: str, n: int = 80) -> str:
     s = re.sub(r"\s+", " ", s).strip()
     return s[:n]
 
-ROLE = {
-    "trinity": "CPO",
-    "jarvis": "CEO",
-    "morpheus": "COO",
-    "oracle": "CDO",
+# Public board only. Internal files/terminals keep seat names.
+PUBLIC_ID = {
+    "jarvis": "chief-of-staff",
+    "trinity": "product",
+    "morpheus": "ops",
+    "oracle": "audit",
+    "altman": "engineering",
+    "graph": "core-graph",
     "silas": "research",
-    "ghostwire": "OSINT",
+    "ghostwire": "osint",
     "tank": "architecture",
-    "jensen": "CWO",
+    "jensen": "compute",
+    "niobe": "growth",
+    "plutus": "finance",
     "guardian-atlas": "guardian",
-    "graph": "orchestration",
-    "altman": "CTO",
-    "niobe": "CMO",
-    "plutus": "CFO",
+    "seraph": "marketing",
+    "persephone": "conversion",
+    "qa-runtime": "qa",
+    "ship-deploy": "ship",
+    "cpo-product": "product",
 }
 
+def public_id(raw: str) -> str:
+    k = (raw or "").strip().lower()[:40]
+    if k in PUBLIC_ID:
+        return PUBLIC_ID[k]
+    if k in PUBLIC_ID.values():
+        return k
+    slug = re.sub(r"[^a-z0-9-]", "", k)
+    return slug or "crew"
+
 def note_from(agent: str, ok: bool) -> str:
-    # page already renders 성공/실패 from ok. note = role only (no business memo).
-    return ROLE.get((agent or "").lower(), "agent")
+    # page already renders 성공/실패 from ok. agent id is the public role label.
+    return ""
 
 def ok_of(d: dict):
     if isinstance(d.get("ok"), bool):
@@ -117,7 +132,7 @@ for p in files:
     ts = d.get("updated") or d.get("started") or d.get("finished") or iso_mtime(p)
     if not isinstance(ts, str) or "T" not in ts:
         ts = iso_mtime(p)
-    agent = agent_of(p, d)
+    agent = public_id(agent_of(p, d))
     ok = bool(ok_of(d))
     note = note_from(agent, ok)
     runs.append({"ts": ts, "agent": agent, "ok": ok, "note": note})
@@ -128,9 +143,10 @@ for p in files:
     if p.stem.startswith("graph"):
         for seat in ("jarvis", "trinity", "morpheus", "oracle"):
             if seat in d and isinstance(d[seat], str) and d[seat].strip():
-                prev = agents.get(seat)
+                pub = public_id(seat)
+                prev = agents.get(pub)
                 if not prev or ts >= prev["last_run"]:
-                    agents[seat] = {"id": seat, "last_run": ts, "ok": bool(ok)}
+                    agents[pub] = {"id": pub, "last_run": ts, "ok": bool(ok)}
 
 agent_list = list(agents.values())
 agent_list.sort(key=lambda a: a.get("last_run") or "", reverse=True)

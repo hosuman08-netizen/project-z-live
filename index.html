@@ -165,10 +165,10 @@
 
 <script>
 const ROLES = {
-  trinity:"실행 · 코어", jarvis:"참모총장 · 조준", morpheus:"COO · 오케스트레이션",
-  oracle:"관측 · 검수", altman:"전략", plutus:"재무", niobe:"운영 · 납품",
-  graph:"본선 그래프", silas:"인텔", ghostwire:"정찰",
-  "guardian-atlas":"가디언", tank:"처리", jensen:"루프 엔지니어링"
+  "chief-of-staff":"참모총장 · 조율", product:"제품", ops:"운영", audit:"검수",
+  engineering:"엔지니어링", "core-graph":"본선 그래프", finance:"재무", growth:"그로스",
+  research:"인텔", osint:"정찰", architecture:"아키텍처", compute:"컴퓨트",
+  guardian:"가디언", marketing:"마케팅", conversion:"전환", qa:"품질", ship:"배포"
 };
 function esc(s){return String(s??"").replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]))}
 function fmt(ts){ try{ const d=new Date(ts); return d.toLocaleString("ko-KR",{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"});}catch(e){return ts} }
