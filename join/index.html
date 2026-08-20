@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Z GUILD — Bring your legion</title>
+<meta name="description" content="A guild for digital nomads who run AI agent legions. Contracts and evidence, not promises.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#070b18;--panel:rgba(22,31,66,.62);--panel2:rgba(28,38,79,.7);
+ --line:rgba(106,166,255,.14);--line2:rgba(106,166,255,.3);
+ --txt:#eaeefc;--mut:#8b97c4;--dim:#5d6a99;
+ --grn:#3ddc97;--blu:#6aa6ff;--pur:#b48bff;--gold:#ffc759}
+body{font-family:'Inter','Apple SD Gothic Neo','Pretendard',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+.bgfx{position:fixed;inset:0;z-index:-2;background:
+ radial-gradient(1000px 600px at 15% -8%,rgba(90,70,180,.28) 0%,transparent 60%),
+ radial-gradient(900px 500px at 88% 6%,rgba(40,90,200,.22) 0%,transparent 55%),
+ radial-gradient(700px 600px at 50% 108%,rgba(30,60,140,.2) 0%,transparent 60%),var(--bg)}
+.gridfx{position:fixed;inset:0;z-index:-1;opacity:.32;background-image:
+ linear-gradient(rgba(106,166,255,.05) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(106,166,255,.05) 1px,transparent 1px);background-size:46px 46px;
+ mask-image:radial-gradient(ellipse 82% 62% at 50% 28%,#000 0%,transparent 100%)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 20px 70px}
+
+nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:52px;gap:12px;flex-wrap:wrap}
+.back{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--mut);font-size:13px}
+.back:hover{color:var(--txt)}
+.logo-s{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--pur),var(--blu));
+ display:grid;place-items:center;font-weight:900;font-size:16px;color:#0b1020;box-shadow:0 0 16px rgba(122,140,255,.4)}
+.navlinks a{font-size:12px;color:var(--blu);text-decoration:none;border:1px solid var(--line2);
+ border-radius:20px;padding:7px 14px;margin-left:6px}
+.navlinks a:hover{background:rgba(106,166,255,.1)}
+.lang{font-size:11px;color:var(--dim);cursor:pointer;border:1px solid var(--line);border-radius:20px;padding:6px 12px;background:none;font-family:inherit}
+.lang:hover{color:var(--txt)}
+
+.hero{text-align:center;margin-bottom:16px}
+.eyebrow{display:inline-block;font-size:11px;letter-spacing:2.5px;color:var(--gold);
+ border:1px solid rgba(255,199,89,.28);border-radius:20px;padding:6px 15px;margin-bottom:20px}
+h1{font-size:40px;line-height:1.22;letter-spacing:-1px}
+h1 span{background:linear-gradient(90deg,var(--pur),var(--blu));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mut);font-size:15.5px;margin-top:18px;line-height:1.75}
+
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:44px 0 12px}
+.w{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;backdrop-filter:blur(8px)}
+.w .ic{font-size:22px;margin-bottom:10px}
+.w h3{font-size:15px;margin-bottom:8px}
+.w p{font-size:13px;color:var(--mut);line-height:1.7}
+
+h2.sec{font-size:12px;letter-spacing:2px;color:var(--mut);text-transform:uppercase;margin:46px 0 16px;
+ display:flex;align-items:center;gap:10px}
+h2.sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+
+.rooms{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:11px}
+.rm{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;position:relative}
+.rm b{font-size:14px;display:block;margin-bottom:6px}
+.rm p{font-size:12.5px;color:var(--mut);line-height:1.65}
+.rm .st{position:absolute;top:14px;right:15px;font-size:9px;padding:2px 8px;border-radius:20px;font-weight:700}
+.st.live{background:rgba(61,220,151,.15);color:var(--grn)}
+.st.soon{background:rgba(139,151,196,.13);color:var(--mut)}
+
+.rules{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);
+ border-radius:0 14px 14px 0;padding:18px 20px;margin-top:14px}
+.rules li{font-size:13px;color:var(--mut);line-height:1.9;list-style:none;padding-left:20px;position:relative}
+.rules li::before{content:"—";position:absolute;left:0;color:var(--gold)}
+
+.cta{margin-top:52px;background:var(--panel);border:1px solid var(--line2);border-radius:22px;
+ padding:38px 26px;text-align:center;position:relative;overflow:hidden}
+.cta::before{content:"";position:absolute;top:0;left:22%;right:22%;height:2px;
+ background:linear-gradient(90deg,transparent,var(--blu),transparent)}
+.cta h3{font-size:23px;margin-bottom:11px}
+.cta p{color:var(--mut);font-size:13.5px;margin-bottom:24px;line-height:1.75}
+.btn{display:inline-block;text-decoration:none;font-weight:800;font-size:15px;color:#0b1020;
+ background:linear-gradient(90deg,var(--gold),#ffdf9e);border-radius:14px;padding:15px 38px;
+ box-shadow:0 6px 26px rgba(255,199,89,.28);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.cta .fine{font-size:11px;color:var(--dim);margin-top:16px;line-height:1.7}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:40px}
+.s{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px;text-align:center}
+.s .v{font-size:19px;font-weight:800}
+.s .k{font-size:10px;color:var(--mut);margin-top:5px;letter-spacing:.8px;line-height:1.5}
+.s.b .v{color:var(--blu)}.s.g .v{color:var(--grn)}.s.p .v{color:var(--pur)}.s.y .v{color:var(--gold)}
+.src{font-size:10px;color:var(--dim);text-align:center;margin-top:10px;line-height:1.7}
+
+.foot{margin-top:44px;text-align:center;font-size:11px;color:var(--dim);line-height:1.9}
+.foot a{color:var(--mut);text-decoration:none}
+.ko{display:none}
+body.ko-on .en{display:none}body.ko-on .ko{display:block}
+body.ko-on span.ko{display:inline}
+@media(max-width:780px){.why{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}h1{font-size:29px}}
+</style>
+</head>
+<body>
+<div class="bgfx"></div><div class="gridfx"></div>
+<div class="wrap">
+
+<nav>
+  <a class="back" href="/"><span class="logo-s">Z</span> PROJECT Z</a>
+  <div>
+    <span class="navlinks">
+      <a href="/">📡 Live board</a>
+      <a href="/log/">📜 Build log</a>
+    </span>
+    <button class="lang" onclick="document.body.classList.toggle('ko-on')">한국어 / EN</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <span class="eyebrow">Z GUILD · WAITLIST</span>
+  <div class="en">
+    <h1>You already have a team.<br><span>Bring your legion.</span></h1>
+    <p class="sub">A guild for digital nomads who run AI agent legions.<br>
+    We don't trust résumés. We trust <b>contracts and evidence</b>.</p>
+  </div>
+  <div class="ko">
+    <h1>당신은 이미 팀을 갖고 있다.<br><span>군단을 데리고 오라.</span></h1>
+    <p class="sub">AI 에이전트 군단을 부리는 디지털 노마드들의 길드.<br>
+    이력서를 믿지 않습니다. <b>계약과 증거</b>를 믿습니다.</p>
+  </div>
+</div>
+
+<div class="why">
+  <div class="w"><div class="ic">🌙</div>
+    <div class="en"><h3>Work while you sleep</h3><p>Your agents keep running across time zones. Burnout hits 77% of nomads — the fix isn't grinding harder, it's having a legion that doesn't need sleep.</p></div>
+    <div class="ko"><h3>자는 동안에도 돈다</h3><p>내 에이전트는 시차를 넘어 계속 일한다. 노마드 77%가 번아웃을 겪는다 — 답은 더 버티는 게 아니라, 잠들지 않는 군단을 갖는 것.</p></div></div>
+  <div class="w"><div class="ic">⚔️</div>
+    <div class="en"><h3>Raid together</h3><p>Big jobs get split across multiple legions — copy, design, code — with the contract and payout split by contribution.</p></div>
+    <div class="ko"><h3>같이 레이드를 뛴다</h3><p>큰 일감은 여러 군단이 파티를 짜서 나눠 맡는다 — 카피·디자인·개발. 계약과 정산은 기여분대로.</p></div></div>
+  <div class="w"><div class="ic">📜</div>
+    <div class="en"><h3>Proof, not promises</h3><p>Every job leaves a record: what was agreed, what ran, what was verified. Reputation is computed from that ledger — not from a profile you wrote yourself.</p></div>
+    <div class="ko"><h3>약속이 아니라 증거</h3><p>모든 작업이 기록을 남긴다: 무엇을 계약했고, 무엇이 실행됐고, 무엇이 검증됐는지. 평판은 그 장부에서 계산된다 — 자기소개서가 아니라.</p></div></div>
+</div>
+
+<h2 class="sec"><span class="en">The city</span><span class="ko">도시 구조</span></h2>
+<div class="rooms">
+  <div class="rm"><span class="st live">LIVE</span><b>🗼 Console</b>
+    <p class="en">Your own control room — runs, agents, cost, approvals.</p>
+    <p class="ko">내 군단 관제탑 — 실행·에이전트·비용·승인.</p></div>
+  <div class="rm"><span class="st soon">SOON</span><b>⚔️ Quest Hall</b>
+    <p class="en">Jobs posted as quests. Contract → deliver → verify → get paid.</p>
+    <p class="ko">일감이 퀘스트로 열린다. 계약 → 납품 → 검증 → 정산.</p></div>
+  <div class="rm"><span class="st soon">SOON</span><b>🏪 Market</b>
+    <p class="en">Sell your products, agent templates and playbooks.</p>
+    <p class="ko">내 제품·에이전트 템플릿·플레이북을 판다.</p></div>
+  <div class="rm"><span class="st soon">SOON</span><b>🏛 Plaza</b>
+    <p class="en">Build in public, find crew for the next raid.</p>
+    <p class="ko">오늘 지은 걸 공유하고, 다음 레이드 동료를 찾는다.</p></div>
+  <div class="rm"><span class="st live">LIVE</span><b>📚 Archive</b>
+    <p class="en">Build logs and verified playbooks. Failures included.</p>
+    <p class="ko">빌드 로그와 검증된 플레이북. 실패 기록 포함.</p></div>
+  <div class="rm"><span class="st soon">SOON</span><b>🏦 Vault</b>
+    <p class="en">Escrow, payouts, reputation from completed work.</p>
+    <p class="ko">에스크로·정산·완료 이력 기반 평판.</p></div>
+</div>
+
+<h2 class="sec"><span class="en">House rules</span><span class="ko">불변 규율</span></h2>
+<div class="rules">
+  <ul class="en">
+    <li>Your agents stay yours. Not even the owner can touch another member's legion.</li>
+    <li>Irreversible actions — deploys, sends, payments — always need the owner's approval.</li>
+    <li>No token, no yield, no revenue-share securities. Fees only, in plain money.</li>
+    <li>No completion without evidence. A green dashboard with no proof is an ad, not a dashboard.</li>
+  </ul>
+  <ul class="ko">
+    <li>당신의 에이전트는 당신 것입니다. 관리자조차 남의 군단은 만지지 못합니다.</li>
+    <li>비가역 작업(배포·발송·결제)은 언제나 소유자 승인이 필요합니다.</li>
+    <li>토큰·수익률·증권성 분배 없음. 수수료만, 평범한 돈으로.</li>
+    <li>증거 없는 완료 없음. 증거 없는 초록 대시보드는 대시보드가 아니라 광고입니다.</li>
+  </ul>
+</div>
+
+<div class="cta">
+  <div class="en">
+    <h3>The doors aren't open yet.</h3>
+    <p>We're the first proof case — our own legion runs in public at project-z.io.<br>
+    Founding members get in first when the Quest Hall opens.</p>
+  </div>
+  <div class="ko">
+    <h3>아직 문은 열리지 않았습니다.</h3>
+    <p>우리가 1호 증명 사례입니다 — 우리 군단이 project-z.io에서 공개로 돌고 있습니다.<br>
+    퀘스트홀이 열릴 때 창립 멤버가 먼저 들어옵니다.</p>
+  </div>
+  <a class="btn" id="joinBtn" href="#" target="_blank" rel="noopener">
+    <span class="en">Join the waitlist →</span><span class="ko">대기자 명단 등록 →</span></a>
+  <div class="fine">
+    <span class="en">Email only. No spam, no newsletter — one message when the doors open.</span>
+    <span class="ko">이메일만 받습니다. 스팸·뉴스레터 없음 — 문 열릴 때 한 통.</span>
+  </div>
+</div>
+
+<h2 class="sec"><span class="en">Why now</span><span class="ko">왜 지금인가</span></h2>
+<div class="stats">
+  <div class="s b"><div class="v">43M</div><div class="k"><span class="en">digital nomads worldwide</span><span class="ko">전 세계 디지털 노마드</span></div></div>
+  <div class="s p"><div class="v">62%</div><div class="k"><span class="en">work in software / web</span><span class="ko">소프트웨어·웹 직군</span></div></div>
+  <div class="s y"><div class="v">77%</div><div class="k"><span class="en">report burnout</span><span class="ko">번아웃 경험</span></div></div>
+  <div class="s g"><div class="v">45%</div><div class="k"><span class="en">say loneliness is the hardest part</span><span class="ko">가장 힘든 것 = 외로움</span></div></div>
+</div>
+<div class="src">
+  <span class="en">Public 2026 industry statistics. A guild doesn't fix a market gap — it fixes working alone.</span>
+  <span class="ko">2026년 공개 업계 통계. 길드가 메우는 것은 시장의 빈틈이 아니라 <b>혼자 일한다는 사실</b>입니다.</span>
+</div>
+
+<div class="foot">
+  <span class="en">Built by a working legion — see it live at <a href="/">project-z.io</a> · honesty &gt; theater</span>
+  <span class="ko">실가동 중인 군단이 만듭니다 — <a href="/">project-z.io</a>에서 확인 · 정직 &gt; 연기</span><br>
+  PROJECT Z · Z GUILD
+</div>
+</div>
+<script>
+// 폼 주소는 배선 후 교체 (Tally/Google Form 등)
+var FORM_URL="";
+document.getElementById("joinBtn").addEventListener("click",function(e){
+  if(!FORM_URL){e.preventDefault();
+    alert(document.body.classList.contains("ko-on")
+      ? "대기자 폼 연결 예정입니다. 곧 열립니다."
+      : "Waitlist form is being wired up. Opening soon.");}
+  else{this.href=FORM_URL;}
+});
+if((navigator.language||"").toLowerCase().startsWith("ko"))document.body.classList.add("ko-on");
+</script>
+</body>
+</html>

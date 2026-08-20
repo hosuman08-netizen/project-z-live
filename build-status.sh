@@ -25,7 +25,91 @@ if status_out=$(cd "$GRAPH" && uv run legion-graph status 2>/dev/null); then
 fi
 [[ -z "$prov" ]] && prov="unknown"
 
-# --- runs → json (python: no secrets, notes only) ---
+# --- runs → sanitized status adapter ---
+ADAPTER="${AGENT_OS_STATUS_ADAPTER:-$HOME/legion/seats/altman/agent-os/status_adapter.py}"
+export RUNS OUT
+export BRAIN_PROV="$prov"
+export BRAIN_OK="$brain_ok"
+python3 "$ADAPTER"
+
+# Public board only: seat names → role labels. Internal files/terminals unchanged.
+python3 <<'PY'
+import json, os, re
+from pathlib import Path
+PUBLIC = {
+    "jarvis": "chief-of-staff",
+    "trinity": "product",
+    "morpheus": "ops",
+    "oracle": "audit",
+    "altman": "engineering",
+    "graph": "core-graph",
+    "silas": "research",
+    "ghostwire": "osint",
+    "tank": "architecture",
+    "jensen": "compute",
+    "niobe": "growth",
+    "plutus": "finance",
+    "guardian-atlas": "guardian",
+    "seraph": "marketing",
+    "persephone": "conversion",
+    "qa-runtime": "qa",
+    "ship-deploy": "ship",
+    "cpo-product": "product",
+}
+DROP_NOTE = {"ceo", "cpo", "coo", "cdo", "cto", "cmo", "cfo", "cwo", "orchestration"}
+
+def pub(raw: str) -> str:
+    k = str(raw or "").strip().lower()[:40]
+    if k in PUBLIC:
+        return PUBLIC[k]
+    if k in PUBLIC.values():
+        return k
+    slug = re.sub(r"[^a-z0-9-]", "", k)
+    return slug or "crew"
+
+out = Path(os.environ["OUT"])
+d = json.loads(out.read_text(encoding="utf-8"))
+merged = {}
+for a in d.get("agents") or []:
+    if not isinstance(a, dict):
+        continue
+    pid = pub(a.get("id"))
+    a["id"] = pid
+    prev = merged.get(pid)
+    if prev is None or str(a.get("last_run") or "") >= str(prev.get("last_run") or ""):
+        merged[pid] = a
+d["agents"] = sorted(merged.values(), key=lambda x: str(x.get("last_run") or ""), reverse=True)
+IP = ("jarvis", "trinity", "morpheus", "oracle", "altman")
+
+def scrub(s: str) -> str:
+    t = str(s or "")
+    for k in IP:
+        t = re.sub(r"(?i)(?<![a-z0-9])" + re.escape(k) + r"(?![a-z0-9])", PUBLIC[k], t)
+    return t
+
+def scrub_obj(o):
+    if isinstance(o, dict):
+        return {k: scrub_obj(v) for k, v in o.items()}
+    if isinstance(o, list):
+        return [scrub_obj(v) for v in o]
+    if isinstance(o, str):
+        return scrub(o)
+    return o
+
+for r in d.get("runs") or []:
+    if not isinstance(r, dict):
+        continue
+    r["agent"] = pub(r.get("agent"))
+    note = str(r.get("note") or "").strip().lower()
+    if note in DROP_NOTE or note in PUBLIC:
+        r["note"] = ""
+d = scrub_obj(d)
+out.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+print(str(out) + " public-labels")
+PY
+
+# Legacy inline generator retained as disabled rollback reference; the adapter above is authoritative.
+if false; then
 export RUNS OUT
 export BRAIN_PROV="$prov"
 export BRAIN_OK="$brain_ok"
@@ -174,6 +258,7 @@ if out.exists():
 out.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print(str(out))
 PY
+fi
 
 # --- git: json changed only ---
 if [[ ! -d "$SITE/.git" ]]; then
