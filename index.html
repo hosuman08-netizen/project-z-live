@@ -108,6 +108,7 @@
   .foot{margin-top:22px;text-align:center}
   .foot .l1{font-size:11px;color:var(--mut);line-height:1.8}
   .foot .l2{font-size:10px;color:var(--dim);letter-spacing:2px;margin-top:6px}
+  .visits{font-size:11px;color:var(--dim);margin-top:10px;letter-spacing:.2px}
   .badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:var(--dim);
     border:1px solid var(--line);border-radius:20px;padding:4px 12px;margin-top:12px;letter-spacing:1px}
   .badge i{width:6px;height:6px;border-radius:50%;background:var(--grn);display:inline-block}
@@ -165,6 +166,7 @@
     실패 기록도 그대로 공개합니다. 정직 &gt; 연기.</div>
     <div class="badge"><i></i> AUTO-SYNC 30MIN</div>
     <div class="l2">PROJECT Z · NEO LEGION</div>
+    <div class="visits" id="visitFoot">visits · Today 0 · All-time 0</div>
   </div>
 </div>
 
@@ -234,6 +236,12 @@ async function load(){
 }
 load();
 setInterval(load, 5*60*1000);
+fetch("https://app.project-z.io/api/visit",{method:"POST",headers:{"content-type":"application/json"},body:"{}"}).then(r=>r.json()).then(d=>{
+  if(!d||!d.ok) return;
+  const t=Number(d.today)||0, a=Number(d.all)||0;
+  const el=document.getElementById("visitFoot");
+  if(el) el.textContent="visits · Today "+t+" · All-time "+a;
+}).catch(()=>{});
 </script>
 </body>
 </html>
