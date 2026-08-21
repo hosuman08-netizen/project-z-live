@@ -67,6 +67,17 @@
   .stat .v em{font-style:normal;font-size:13px;color:var(--dim);font-weight:600;margin-left:2px}
   .stat.g .v{color:var(--grn)} .stat.b .v{color:var(--blu)} .stat.p .v{color:var(--pur)} .stat.gold .v{color:var(--gold)}
 
+  /* ── 히어로 (Trinity 2026-08-21 · 피드/통계 코드 미터치) ── */
+  .hero{position:relative;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    margin-bottom:22px;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+  .hero img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+  .hero-copy{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+    padding:6% 5%;max-width:60%;pointer-events:none}
+  .hero-copy h2{color:#fff;font-size:clamp(18px,3.4vw,34px);font-weight:800;letter-spacing:.2px;
+    line-height:1.25;margin-bottom:10px;text-wrap:balance}
+  .hero-copy p{color:#dfe4f7;font-size:clamp(11px,1.4vw,14px);line-height:1.6;max-width:42ch}
+  @media (max-width:640px){.hero-copy{max-width:78%;padding:7% 6%}.hero-copy p{display:none}}
+
   /* ── 메인 그리드 ── */
   .grid2{display:grid;grid-template-columns:1.45fr 1fr;gap:14px}
   .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;
@@ -142,6 +153,21 @@
       </div>
     </div>
   </header>
+
+  <div class="hero">
+    <picture>
+      <source media="(max-width:900px)" srcset="assets/hero-1280x720.webp" type="image/webp">
+      <source media="(max-width:900px)" srcset="assets/hero-1280x720.png" type="image/png">
+      <source srcset="assets/hero-2560x1440.webp" type="image/webp">
+      <source srcset="assets/hero-2560x1440.png" type="image/png">
+      <img src="assets/hero-2560x1440.png" width="2560" height="1440" loading="eager"
+           alt="오퍼레이터 코어 노드와 그에 연결된 AI 군단 에이전트 네트워크">
+    </picture>
+    <div class="hero-copy">
+      <h2>연출 아님, 실측.</h2>
+      <p>1인 AI 군단 실가동 증명 — 아래 보드가 legion-graph 실제 실행 기록입니다.</p>
+    </div>
+  </div>
 
   <div class="stats">
     <div class="stat b"><div class="k">에이전트</div><div class="v" id="sAgents">–</div></div>
