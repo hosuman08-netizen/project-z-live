@@ -56,7 +56,7 @@
   .upd{font-size:11px;color:var(--mut);margin-top:2px}
 
   /* ── 요약 스탯 ── */
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
   .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;
     backdrop-filter:blur(8px);position:relative;overflow:hidden;transition:border-color .3s}
   .stat:hover{border-color:var(--line2)}
@@ -145,95 +145,60 @@
 
   <div class="stats">
     <div class="stat b"><div class="k">에이전트</div><div class="v" id="sAgents">–</div></div>
-    <div class="stat g"><div class="k">현재 가동</div><div class="v" id="sActive">–</div></div>
-    <div class="stat p"><div class="k">기록된 실행</div><div class="v" id="sRuns">–</div></div>
-    <div class="stat gold"><div class="k">성공률</div><div class="v" id="sRate">–</div></div>
+    <div class="stat g"><div class="k">LIVE</div><div class="v" id="sActive">–</div></div>
+    <div class="stat p"><div class="k">오늘 실행</div><div class="v" id="sRuns">–</div></div>
   </div>
 
   <div class="grid2">
     <div class="panel">
-      <h2>🏢 에이전트 데스크</h2>
-      <div class="desks" id="desks"><div class="rl">legion-status.json 대기중…</div></div>
+      <h2>에이전트</h2>
+      <div class="desks" id="desks"><div class="rl">데이터 갱신 중</div></div>
     </div>
     <div class="panel feed">
-      <h2>⚡ 실행 타임라인 <span style="font-size:9px;letter-spacing:1px;color:var(--dim)">(실측)</span></h2>
-      <div id="runs"><div class="rl">데이터 대기중…</div></div>
+      <h2>오늘</h2>
+      <div id="runs"><div class="rl">데이터 갱신 중</div></div>
     </div>
   </div>
 
   <div class="foot">
-    <div class="l1">이 보드는 legion-graph의 실제 실행 기록(runs)에서 자동 생성됩니다 — 연출 아님, 실측.<br>
-    실패 기록도 그대로 공개합니다. 정직 &gt; 연기.</div>
-    <div class="badge"><i></i> AUTO-SYNC 30MIN</div>
+    <div class="l1">숫자는 Z OS 공개 요약이다. 이름·메모·성공률은 넣지 않는다. 틀린 숫자보다 없는 숫자.</div>
+    <div class="badge"><i></i> Z OS LIVE</div>
     <div class="l2">PROJECT Z · NEO LEGION</div>
     <div class="visits" id="visitFoot">visits · Today 0 · All-time 0</div>
   </div>
 </div>
 
 <script>
-const ROLES = {
-  "chief-of-staff":"참모총장 · 조율", product:"제품", ops:"운영", audit:"검수",
-  engineering:"엔지니어링", "core-graph":"본선 그래프", finance:"재무", growth:"그로스",
-  research:"인텔", osint:"정찰", architecture:"아키텍처", compute:"컴퓨트",
-  guardian:"가디언", marketing:"마케팅", conversion:"전환", qa:"품질", ship:"배포"
-};
-function esc(s){return String(s??"").replace(/[<>&"]/g,c=>({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]))}
-function fmt(ts){ try{ const d=new Date(ts); return d.toLocaleString("ko-KR",{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"});}catch(e){return ts} }
-function rel(ts){
-  try{
-    const s = Math.floor((Date.now()-new Date(ts).getTime())/1000);
-    if(s<60) return "방금 전";
-    if(s<3600) return Math.floor(s/60)+"분 전";
-    if(s<86400) return Math.floor(s/3600)+"시간 전";
-    return Math.floor(s/86400)+"일 전";
-  }catch(e){return ""}
+function waitCopy(){
+  document.getElementById("brainDot").className = "dot";
+  document.getElementById("brainTxt").textContent = "데이터 갱신 중";
+  document.getElementById("updated").textContent = "";
+  document.getElementById("sAgents").textContent = "–";
+  document.getElementById("sActive").textContent = "–";
+  document.getElementById("sRuns").textContent = "–";
+  document.getElementById("desks").innerHTML = '<div class="rl">데이터 갱신 중</div>';
+  document.getElementById("runs").innerHTML = '<div class="rl">데이터 갱신 중</div>';
 }
-
 async function load(){
   try{
-    const r = await fetch("./legion-status.json?t="+Date.now());
-    if(!r.ok) throw new Error("no feed");
+    const r = await fetch("https://app.project-z.io/api/public/summary?t="+Date.now());
+    if(!r.ok) throw new Error("feed");
     const d = await r.json();
-
-    // brain
-    const on = d.brain && d.brain.ok;
-    document.getElementById("brainDot").className = "dot "+(on?"on":"off");
-    document.getElementById("brainTxt").textContent = on ? "두뇌 가동 중 · "+esc(d.brain.provider) : "두뇌 오프라인";
-    document.getElementById("updated").textContent = "갱신 "+fmt(d.updated)+" ("+rel(d.updated)+")";
-
-    const agents = d.agents||[], runs = d.runs||[];
-    const now = Date.now();
-
-    // stats
-    const fresh24 = a => a.last_run && (now - new Date(a.last_run).getTime()) < 864e5;
-    const active = agents.filter(a=>a.ok!==false && fresh24(a)).length;
-    const okRuns = runs.filter(x=>x.ok).length;
-    document.getElementById("sAgents").innerHTML = agents.length+'<em>명</em>';
-    document.getElementById("sActive").innerHTML = active+'<em>명</em>';
-    document.getElementById("sRuns").innerHTML = runs.length+'<em>건</em>';
-    document.getElementById("sRate").innerHTML = runs.length? Math.round(okRuns/runs.length*100)+'<em>%</em>' : "–";
-
-    // agents
-    const desks = agents.map(a=>{
-      const fresh = fresh24(a);
-      const lt = a.ok===false ? "warn" : (fresh ? "on" : "");
-      const st = a.ok===false ? '<span class="st r">오류</span>' : (fresh ? '<span class="st g">가동</span>' : '<span class="st">대기</span>');
-      return `<div class="desk"><div class="row1"><span class="lt ${lt}"></span><span class="nm">${esc(a.id)}</span></div><div class="rl">${esc(ROLES[a.id]||"에이전트")} · ${a.last_run?rel(a.last_run):"미소환"}</div>${st}</div>`;
-    }).join("");
-    document.getElementById("desks").innerHTML = desks || '<div class="rl">아직 소환 기록 없음</div>';
-
-    // runs timeline
-    const feed = runs.slice(0,12).map(x=>
-      `<div class="it"><div class="tl"><span class="d ${x.ok?'':'bad'}"></span><span class="ln"></span></div>
-       <div><div class="tm">${fmt(x.ts)} · ${rel(x.ts)}</div>
-       <b>${esc(x.agent)}</b> ${x.ok?'<span class="ok">성공</span>':'<span class="bad">실패</span>'}${x.note?' <span class="note-t">· '+esc(x.note)+'</span>':''}</div></div>`
-    ).join("");
-    document.getElementById("runs").innerHTML = feed || '<div class="rl">기록 없음</div>';
+    if(!d || !d.ok) throw new Error("feed");
+    const agents=Number(d.agents)||0, live=Number(d.live)||0, today=Number(d.runs_today)||0;
+    document.getElementById("brainDot").className = "dot on";
+    document.getElementById("brainTxt").textContent = "Z OS 연결";
+    document.getElementById("updated").textContent = d.updated ? "갱신 "+String(d.updated).slice(11,16)+" UTC" : "";
+    document.getElementById("sAgents").innerHTML = agents+'<em>명</em>';
+    document.getElementById("sActive").innerHTML = live+'<em>LIVE</em>';
+    document.getElementById("sRuns").innerHTML = today+'<em>건</em>';
+    document.getElementById("desks").innerHTML = '<div class="rl">LIVE '+live+' · 전체 '+agents+'</div>';
+    document.getElementById("runs").innerHTML = '<div class="rl">오늘 실행 '+today+'건. 이름·성공률은 공개하지 않는다.</div>';
   }catch(e){
-    document.getElementById("brainTxt").textContent = "피드 연결 대기중";
-    document.getElementById("updated").textContent = "legion-status.json 로드 실패";
+    waitCopy();
   }
 }
+waitCopy();
 load();
 setInterval(load, 5*60*1000);
 fetch("https://app.project-z.io/api/visit",{method:"POST",headers:{"content-type":"application/json"},body:"{}"}).then(r=>r.json()).then(d=>{
