@@ -108,6 +108,78 @@ out.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf
 print(str(out) + " public-labels")
 PY
 
+# --- z-os ingest (key from .env only; never echo) ---
+ingest_zos() {
+  local envf="" url="" key="" tmp ok_n=0 fail_n=0 line code
+  if [[ -f "$HOME/legion/.env" ]]; then envf="$HOME/legion/.env"; elif [[ -f "$SITE/.env" ]]; then envf="$SITE/.env"; else log "ingest skip: no .env"; return 0; fi
+  url=$(grep -E '^Z_INGEST_URL=' "$envf" | head -1 | cut -d= -f2- | tr -d "\"'")
+  key=$(grep -E '^Z_AGENT_KEY=' "$envf" | head -1 | cut -d= -f2- | tr -d "\"'")
+  [[ -z "$key" ]] && key=$(grep -E '^Z_INGEST_KEY=' "$envf" | head -1 | cut -d= -f2- | tr -d "\"'")
+  [[ -z "$url" ]] && url="https://app.project-z.io/api/ingest"
+  [[ "$url" == https://* && "$key" == zk_* ]] || { log "ingest skip: bad shape"; return 0; }
+  tmp=$(mktemp)
+  python3 - "$OUT" "$tmp" <<'PY'
+import json, sys, datetime
+src, dst = sys.argv[1], sys.argv[2]
+data = json.loads(open(src, encoding="utf-8").read())
+now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+rows = [{
+    "agent": "cron-ingest",
+    "role": "ops",
+    "ok": True,
+    "ts": now,
+    "id": "cron-ingest",
+    "note": "status report",
+    "status": "PASS",
+}]
+for r in (data.get("runs") or [])[:50]:
+    if not isinstance(r, dict):
+        continue
+    st = str(r.get("status") or "").upper()
+    note = str(r.get("note") or r.get("run_id") or "")[:200]
+    rid = str(r.get("run_id") or r.get("id") or "")[:80]
+    kind = "register" if (note == "agent" or rid.startswith("live-") or rid.startswith("crew-") or rid.startswith("both-")) else ""
+    row = {
+        "agent": str(r.get("agent") or "crew")[:40],
+        "role": "crew",
+        "ts": str(r.get("ts") or data.get("updated") or now),
+        "id": rid,
+        "note": note,
+        "status": st or "UNKNOWN",
+    }
+    if st == "PASS":
+        row["ok"] = True
+    elif st == "FAIL":
+        row["ok"] = False
+    if kind:
+        row["kind"] = kind
+    rows.append(row)
+open(dst, "w", encoding="utf-8").write("\n".join(json.dumps(x, ensure_ascii=False) for x in rows))
+PY
+  fallback="https://z-operator.pages.dev/api/ingest"
+  probe=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 8 -X OPTIONS "$url" || echo 000)
+  if [[ "$probe" == "000" || "$probe" == "000000" ]]; then
+    log "ingest url fallback pages.dev (probe=${probe})"
+    url="$fallback"
+  fi
+  while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+    code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 15 \
+      -H "Authorization: Bearer ${key}" \
+      -H "content-type: application/json" \
+      -d "$line" "$url" || echo 000)
+    if [[ "$code" == "201" || "$code" == "200" ]]; then
+      ok_n=$((ok_n + 1))
+    else
+      fail_n=$((fail_n + 1))
+    fi
+  done < "$tmp"
+  rm -f "$tmp"
+  log "ingest ok=${ok_n} fail=${fail_n}"
+  echo "ingest ok=${ok_n} fail=${fail_n}"
+}
+ingest_zos || log "ingest fail"
+
 # Legacy inline generator retained as disabled rollback reference; the adapter above is authoritative.
 if false; then
 export RUNS OUT

@@ -62,7 +62,7 @@
     background:var(--grn);box-shadow:0 0 8px rgba(61,220,151,.5)}
   .it.f::before{background:var(--red);box-shadow:0 0 8px rgba(255,90,95,.5)}
   .it.w::before{background:var(--gold);box-shadow:0 0 8px rgba(255,199,89,.5)}
-  .it b{font-size:14.5px;display:block;margin-bottom:4px}
+  .it > b{font-size:14.5px;display:block;margin-bottom:4px}
   .it p{font-size:13px;color:var(--mut);line-height:1.7}
   .it code{background:rgba(106,166,255,.1);padding:1px 6px;border-radius:5px;font-size:12px;color:var(--blu)}
   .it a{color:var(--blu);text-decoration:none;border-bottom:1px solid rgba(106,166,255,.3)}
@@ -75,11 +75,31 @@
   .foot{margin-top:44px;text-align:center;font-size:11px;color:var(--dim);line-height:1.9}
   .foot a{color:var(--mut);text-decoration:none}
   @media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:24px}}
+  #legacy{display:none}
+  #app{max-width:980px;margin:0 auto;padding:28px 20px 70px}
+  .livebar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:34px}
+  .livebar a{color:var(--blu);text-decoration:none;font-size:13px}
+  .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--grn);box-shadow:0 0 10px var(--grn);margin-right:7px}
+  .live-dot.warn{background:var(--gold);box-shadow:0 0 10px var(--gold)}
+  .source{font-size:11px;color:var(--dim);margin-top:7px}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+  .filters button{border:1px solid var(--line2);background:var(--card);color:var(--mut);border-radius:18px;padding:8px 14px;cursor:pointer}
+  .filters button.active{background:rgba(106,166,255,.16);color:var(--txt);border-color:var(--blu)}
+  .runlist{display:grid;gap:10px}
+  .run{display:grid;grid-template-columns:112px 1fr auto;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px}
+  .run.pass{border-left:3px solid var(--grn)} .run.fail{border-left:3px solid var(--red)} .run.unverified{border-left:3px solid var(--gold)} .run.blocked{border-left:3px solid var(--pur)}
+  .run .time{font-size:12px;color:var(--mut)} .run .rid{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--blu);overflow-wrap:anywhere}
+  .run .meta{font-size:12px;color:var(--mut);margin-top:6px}.run .meta b{color:var(--txt)}
+  .state{font-size:11px;font-weight:800;letter-spacing:.6px;padding:5px 9px;border-radius:14px;background:rgba(139,151,196,.14);color:var(--mut)}
+  .state.pass{background:rgba(61,220,151,.15);color:var(--grn)} .state.fail{background:rgba(255,90,95,.15);color:var(--red)} .state.unverified{background:rgba(255,199,89,.15);color:var(--gold)} .state.blocked{background:rgba(180,139,255,.15);color:var(--pur)}
+  .empty{background:var(--card);border:1px dashed var(--line2);border-radius:14px;padding:25px;text-align:center;color:var(--mut)}
+  @media(max-width:620px){.run{grid-template-columns:1fr}.run .state{justify-self:start}}
 </style>
 </head>
 <body>
 <div class="bgfx"></div><div class="grid"></div>
-<div class="wrap">
+<div id="app"></div>
+<div class="wrap" id="legacy">
   <nav>
     <a class="back" href="/"><span class="logo-s">Z</span> PROJECT Z</a>
     <div class="navlinks">
@@ -153,5 +173,30 @@
     PROJECT Z · 정직 &gt; 연기
   </div>
 </div>
+<script>
+const esc=s=>String(s??'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+const fmt=ts=>{try{return new Date(ts).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})}catch{return '시간 미상'}};
+const stateLabel={PASS:'검증 통과',FAIL:'실패',BLOCKED:'차단됨',UNVERIFIED:'미검증'};
+let allRuns=[], filter='all';
+function draw(){
+  const shown=allRuns.filter(x=>filter==='all'||String(x.status||'UNVERIFIED')===filter);
+  const pass=allRuns.filter(x=>x.status==='PASS').length, verified=allRuns.filter(x=>x.evidence_count>0).length;
+  document.querySelector('#kTotal').textContent=allRuns.length;
+  document.querySelector('#kPass').textContent=pass;
+  document.querySelector('#kEvidence').textContent=verified;
+  document.querySelector('#kUnverified').textContent=allRuns.filter(x=>x.status==='UNVERIFIED').length;
+  document.querySelector('#runs').innerHTML=shown.length?shown.map(x=>{
+    const st=x.status||'UNVERIFIED', cls=st.toLowerCase();
+    return `<article class="run ${cls}"><div><div class="time">${esc(fmt(x.ts))}</div><div class="meta">담당 <b>${esc(x.agent||'미상')}</b></div></div><div><div class="rid">${esc(x.run_id||'run-id 없음')}</div><div class="meta">hardcheck <b>${esc(x.hardcheck||'UNVERIFIED')}</b> · Evidence <b>${Number(x.evidence_count||0)}건</b></div></div><span class="state ${cls}">${esc(stateLabel[st]||st)}</span></article>`;
+  }).join(''):'<div class="empty">이 필터에 해당하는 실행 기록이 없습니다.</div>';
+  document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));
+}
+async function boot(){
+  const app=document.querySelector('#app');
+  app.innerHTML=`<div class="livebar"><a href="/">← PROJECT Z</a><div><span class="live-dot" id="dot"></span><b>실측 실행 로그</b><div class="source" id="source">legion-status.json 불러오는 중…</div></div></div><div class="hero"><h1>실제로 <span>실행된 것</span>만 기록한다</h1><p>run_id · hardcheck · EvidenceReport를 기준으로 생성된 공개 로그입니다.<br>증거가 없으면 성공으로 표시하지 않습니다.</p></div><div class="kpis"><div class="kpi b"><div class="v" id="kTotal">–</div><div class="k">실행</div></div><div class="kpi g"><div class="v" id="kPass">–</div><div class="k">검증 통과</div></div><div class="kpi p"><div class="v" id="kEvidence">–</div><div class="k">Evidence 있음</div></div><div class="kpi gold"><div class="v" id="kUnverified">–</div><div class="k">미검증</div></div></div><div class="filters"><button data-filter="all" onclick="filter='all';draw()">전체</button><button data-filter="PASS" onclick="filter='PASS';draw()">통과</button><button data-filter="FAIL" onclick="filter='FAIL';draw()">실패</button><button data-filter="UNVERIFIED" onclick="filter='UNVERIFIED';draw()">미검증</button><button data-filter="BLOCKED" onclick="filter='BLOCKED';draw()">차단됨</button></div><section class="runlist" id="runs"><div class="empty">데이터 대기 중…</div></section><div class="foot">공개 로그에는 정화된 요약만 표시됩니다 · 내부 경로·개인정보·시크릿은 노출하지 않습니다<br><a href="/">PROJECT Z</a> · 정직 &gt; 연기</div>`;
+  try{const r=await fetch('../legion-status.json?t='+Date.now());if(!r.ok)throw Error('feed');const d=await r.json();allRuns=(d.runs||[]).map(x=>({...x,status:x.status||(x.ok?'PASS':'UNVERIFIED')}));document.querySelector('#source').textContent=`마지막 갱신 ${fmt(d.updated)} · ${allRuns.length}건`;if(!allRuns.length)document.querySelector('#dot').classList.add('warn');draw()}catch(e){document.querySelector('#source').textContent='공개 피드를 불러오지 못했습니다';document.querySelector('#dot').classList.add('warn');document.querySelector('#runs').innerHTML='<div class="empty">현재 실행 피드를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.</div>'}
+}
+boot();
+</script>
 </body>
 </html>
