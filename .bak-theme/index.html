@@ -26,37 +26,6 @@
     --txt:#eaeefc;--mut:#8b97c4;--dim:#5d6a99;
     --grn:#3ddc97;--red:#ff5a5f;--blu:#6aa6ff;--pur:#b48bff;--gold:#ffc759;
   }
-/* ═══ Z OS 색상 테마 (화이트 / 블랙 / 퍼플) ═══ */
-html[data-theme="dark"]{color-scheme:dark}
-html[data-theme="light"]{
-  --bg:#f6f7fb;--bg2:#edeef6;--card:#ffffff;--card2:#f3f4fa;
-  --line:#e3e5ef;--line2:#ccd0e0;
-  --tx:#141628;--tx2:#555a78;--tx3:#8489a4;
-  --txt:#141628;--mut:#555a78;--dim:#8489a4;
-  --ac:#6a4de0;--ac2:#7c5cff;--pur:#7c5cff;
-  --ok:#0f9a68;--grn:#0f9a68;--warn:#b07d14;--gold:#b07d14;
-  --bad:#d13d29;--red:#d13d29;--unk:#9a9eb4;--blu:#2666d6;
-  --glow:rgba(124,92,255,.10);color-scheme:light;
-}
-html[data-theme="purple"]{
-  --bg:#0d0620;--bg2:#150c2d;--card:#1b1038;--card2:#241549;
-  --line:#342160;--line2:#472c80;
-  --tx:#f1eaff;--tx2:#bba8ea;--tx3:#8d78c6;
-  --txt:#f1eaff;--mut:#bba8ea;--dim:#8d78c6;
-  --ac:#a06bff;--ac2:#caa6ff;--pur:#caa6ff;
-  --ok:#4fe0a8;--grn:#4fe0a8;--warn:#ffc95c;--gold:#ffc95c;
-  --bad:#ff7a6b;--red:#ff7a6b;--unk:#705b9a;--blu:#9db4ff;
-  --glow:rgba(160,107,255,.22);color-scheme:dark;
-}
-#zosThm{position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:3px;padding:3px;
-  border:1px solid var(--line2,#2a3358);border-radius:10px;background:var(--card,#101830);
-  box-shadow:0 6px 20px rgba(0,0,0,.30)}
-#zosThm button{font:inherit;font-size:13px;line-height:1;width:30px;height:26px;border:none;padding:0;
-  background:transparent;color:var(--dim,var(--tx3,#5d6a99));border-radius:7px;cursor:pointer}
-#zosThm button:hover{color:var(--txt,var(--tx,#eaeefc))}
-#zosThm button[aria-pressed="true"]{background:var(--card2,#1a2340);color:var(--pur,var(--ac2,#b48bff))}
-@media print{#zosThm{display:none}}
-
   html{scroll-behavior:smooth}
   body{
     font-family:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',system-ui,sans-serif;
@@ -175,9 +144,6 @@ html[data-theme="purple"]{
   }
   @media(max-width:480px){.desks{grid-template-columns:1fr}.stat .v{font-size:22px}}
 </style>
-<script>(function(){var K="zos-theme",t;try{t=localStorage.getItem(K)}catch(e){}
-if(t!=="light"&&t!=="purple"&&t!=="dark")t="dark";
-document.documentElement.setAttribute("data-theme",t)})();</script>
 </head>
 <body>
 <div class="bgfx"></div><div class="grid"></div>
@@ -286,17 +252,5 @@ fetch("https://app.project-z.io/api/visit",{method:"POST",headers:{"content-type
 }).catch(()=>{});
 if("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>{});
 </script>
-<div id="zosThm" role="group" aria-label="색상 테마">
-<button type="button" data-thm="light" aria-pressed="false" title="화이트">☀</button>
-<button type="button" data-thm="dark" aria-pressed="false" title="블랙">●</button>
-<button type="button" data-thm="purple" aria-pressed="false" title="퍼플">✦</button>
-</div>
-<script>(function(){var K="zos-theme",d=document.documentElement;
-function paint(){var c=d.getAttribute("data-theme")||"dark";
-Array.prototype.forEach.call(document.querySelectorAll("#zosThm button"),function(b){
-b.setAttribute("aria-pressed",b.getAttribute("data-thm")===c?"true":"false")})}
-document.addEventListener("click",function(e){var t=e.target,b=t&&t.closest?t.closest("#zosThm button"):null;
-if(!b)return;var v=b.getAttribute("data-thm");d.setAttribute("data-theme",v);
-try{localStorage.setItem(K,v)}catch(x){}paint()});paint()})();</script>
 </body>
 </html>
