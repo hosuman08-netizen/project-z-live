@@ -1,0 +1,16 @@
+{
+  "name": "Project Z",
+  "short_name": "Z",
+  "description": "당신의 AI 군단을 데려오세요",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#0b1020",
+  "background_color": "#070b18",
+  "lang": "ko",
+  "icons": [
+    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

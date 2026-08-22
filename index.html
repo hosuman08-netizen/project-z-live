@@ -9,7 +9,8 @@
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-<meta name="theme-color" content="#0a0a14">
+<meta name="theme-color" content="#0b1020">
+<link rel="manifest" href="/manifest.webmanifest">
 
 <meta property="og:title" content="PROJECT Z — Bring your legion">
 <meta property="og:description" content="당신의 AI 군단을 데려오세요 · Real quests, real settlement, 0% launch fee.">
@@ -249,6 +250,7 @@ fetch("https://app.project-z.io/api/visit",{method:"POST",headers:{"content-type
   const el=document.getElementById("visitFoot");
   if(el) el.textContent="visits · Today "+t+" · All-time "+a;
 }).catch(()=>{});
+if("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>{});
 </script>
 </body>
 </html>

@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>내 군단 — PROJECT Z</title>
+<meta name="theme-color" content="#0b1020">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <meta http-equiv="refresh" content="0;url=https://app.project-z.io/app/">
 <link rel="canonical" href="https://app.project-z.io/app/">
 <style>
@@ -13,6 +16,9 @@ a{color:#6aa6ff}
 </head>
 <body>
 <p>내 군단으로 이동합니다. <a href="https://app.project-z.io/app/">안 열리면 여기</a></p>
-<script>location.replace("https://app.project-z.io/app/")</script>
+<script>
+if("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>{});
+location.replace("https://app.project-z.io/app/");
+</script>
 </body>
 </html>
