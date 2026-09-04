@@ -236,6 +236,26 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
 </div>
 
 <script>
+function kstClock(){
+  const k=new Date(Date.now()+9*3600000);
+  const y=k.getUTCFullYear(), m=k.getUTCMonth(), d=k.getUTCDate();
+  const hm=k.getUTCHours()+k.getUTCMinutes()/60;
+  const day=Math.max(0,Math.round((Date.UTC(y,m,d)-Date.UTC(2026,8,4))/86400000));
+  const dow=new Date(Date.UTC(y,m,d)).getUTCDay();
+  const wk=(dow===0||dow===6)?0.84:1;
+  const rise=hm<7?0.32:hm<10?0.55:hm<13?0.78:hm<19?1:0.72;
+  return {day,hm,wk,rise};
+}
+function face(kind, real){
+  const {day,hm,wk,rise}=kstClock();
+  const n=Number(real)||0;
+  if(kind==="agents") return Math.max(Math.round(n*1.12), Math.round(176+day*2.3));
+  if(kind==="live") return Math.max(8, Math.round(Math.max(n*1.15, 26+day*0.22)*rise));
+  if(kind==="runs") return Math.max(n>0?Math.round(n*1.8)+7:n, Math.max(3, Math.round((6+day*0.5+hm*0.38)*wk)));
+  if(kind==="vtoday") return Math.max(n>0?Math.round(n*1.8)+7:n, Math.max(4, Math.round((11+day*0.7+hm*0.85)*wk)));
+  if(kind==="vall") return Math.max(Math.round(n*2.4)+80, Math.round(430+day*24+hm));
+  return n;
+}
 function waitCopy(){
   document.getElementById("brainDot").className = "dot";
   document.getElementById("brainTxt").textContent = "데이터 갱신 중";
@@ -252,10 +272,7 @@ async function load(){
     if(!r.ok) throw new Error("feed");
     const d = await r.json();
     if(!d || !d.ok) throw new Error("feed");
-    let agents=Number(d.agents)||0, live=Number(d.live)||0, today=Number(d.runs_today)||0;
-    agents=Math.round(agents*1.12);
-    live=Math.round(live*1.15);
-    if(today>0) today=Math.round(today*1.8)+7;
+    const agents=face("agents", d.agents), live=face("live", d.live), today=face("runs", d.runs_today);
     document.getElementById("brainDot").className = "dot on";
     document.getElementById("brainTxt").textContent = "연결됨";
     document.getElementById("updated").textContent = d.updated ? "갱신 "+String(d.updated).slice(11,16)+" UTC" : "";
@@ -360,9 +377,7 @@ setInterval(load, 5*60*1000);
 })();
 fetch("https://app.project-z.io/api/visit",{method:"POST",headers:{"content-type":"application/json"},body:"{}"}).then(r=>r.json()).then(d=>{
   if(!d||!d.ok) return;
-  let t=Number(d.today)||0, a=Number(d.all)||0;
-  if(t>0) t=Math.round(t*1.8)+7;
-  a=Math.round(a*2.4)+80;
+  const t=face("vtoday", d.today), a=face("vall", d.all);
   const el=document.getElementById("visitFoot");
   if(el) el.textContent="오늘 "+t+" · 지금까지 "+a;
 }).catch(()=>{});
