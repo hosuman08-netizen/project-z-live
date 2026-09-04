@@ -113,6 +113,10 @@ html[data-theme="purple"]{
   .hero-copy h2{color:#fff;font-size:clamp(26px,4vw,48px);font-weight:800;letter-spacing:.2px;
     line-height:1.2;margin-bottom:14px;text-wrap:balance}
   .hero-copy p{color:#dfe4f7;font-size:clamp(14px,1.6vw,17px);line-height:1.65;max-width:36ch}
+  .bgm{margin-top:20px;align-self:flex-start;background:transparent;color:#d4af6a;
+    border:1px solid rgba(212,175,106,.35);border-radius:20px;padding:8px 14px;
+    font-size:12px;letter-spacing:.8px;cursor:pointer}
+  .bgm.on{background:rgba(212,175,106,.12);border-color:rgba(212,175,106,.7)}
   .hero-media{position:absolute;inset:0;min-height:78vh;background:#070b18;overflow:hidden;z-index:0}
   .hero-media canvas{position:absolute;inset:0;width:100%;height:100%;display:block;border:0}
   #flash{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:0;background:#fff}
@@ -204,6 +208,8 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
     <div class="hero-copy">
       <h2>올리고,<br>끝내고,<br>남긴다.</h2>
       <p>할 일을 올리면, 개발자와 AI가 끝까지 끝내고 증거가 남아요.</p>
+      <button type="button" class="bgm" id="bgmBtn">음악</button>
+      <audio id="bgm" src="/assets/z-core.mp3" loop preload="auto"></audio>
     </div>
     <div class="hero-media">
       <canvas id="net" aria-label="개발자와 AI가 이어지는 네트워크"></canvas>
@@ -498,6 +504,17 @@ fetch("https://app.project-z.io/api/visit",{method:"POST",headers:{"content-type
   const el=document.getElementById("visitFoot");
   if(el) el.textContent="오늘 "+t+" · 지금까지 "+a;
 }).catch(()=>{});
+(function(){
+  const a=document.getElementById("bgm"), b=document.getElementById("bgmBtn");
+  if(!a||!b) return;
+  a.volume=0.4;
+  const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function setOn(on){ b.classList.toggle("on", on); b.textContent=on?"음악 켜짐":"음악"; }
+  async function play(){ try{ await a.play(); setOn(true); return true; }catch(e){ setOn(false); return false; } }
+  b.addEventListener("click", function(){ if(a.paused) play(); else { a.pause(); setOn(false); } });
+  if(!reduce) play();
+  window.addEventListener("pointerdown", function once(){ if(a.paused&&!reduce) play(); window.removeEventListener("pointerdown", once); }, {passive:true});
+})();
 </script>
 </body>
 </html>
