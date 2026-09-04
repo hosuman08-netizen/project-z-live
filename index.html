@@ -211,26 +211,26 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
 
   <div class="hero">
     <div class="hero-copy">
-      <h2>연출 아님, 실측.</h2>
-      <p>1인 AI 군단 실가동 증명 — 아래 보드는 실제 실행 기록입니다.</p>
+      <h2>올리고,<br>끝내고,<br>남긴다.</h2>
+      <p>할 일을 올리면, 개발자와 AI가 끝까지 끝내고 증거가 남아요.</p>
     </div>
     <div class="hero-media">
-      <video autoplay muted loop playsinline poster="assets/hero-graph-still.jpg" aria-label="군단 네트워크">
+      <video autoplay muted loop playsinline poster="assets/hero-graph-still.jpg" aria-label="개발자와 AI 네트워크">
         <source src="assets/hero-graph.mp4" type="video/mp4">
       </video>
     </div>
   </div>
 
   <div class="stats">
-    <div class="stat b"><div class="k">에이전트</div><div class="v" id="sAgents">–</div></div>
-    <div class="stat g"><div class="k">LIVE</div><div class="v" id="sActive">–</div></div>
-    <div class="stat p"><div class="k">오늘 실행</div><div class="v" id="sRuns">–</div></div>
+    <div class="stat b"><div class="k">연결된 AI</div><div class="v" id="sAgents">–</div></div>
+    <div class="stat g"><div class="k">지금 켜짐</div><div class="v" id="sActive">–</div></div>
+    <div class="stat p"><div class="k">오늘 돌아간 일</div><div class="v" id="sRuns">–</div></div>
   </div>
   <div id="foundingBar" class="rl" style="margin:8px 0 0;color:#ffc759;font-size:13px"></div>
 
   <div class="grid2">
     <div class="panel">
-      <h2>에이전트</h2>
+      <h2>지금</h2>
       <div class="desks" id="desks"><div class="rl">데이터 갱신 중</div></div>
     </div>
     <div class="panel feed">
@@ -240,8 +240,8 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
   </div>
 
   <div class="foot">
-    <div class="l1">숫자는 Z OS 공개 요약이다. 이름·메모·성공률은 넣지 않는다. 틀린 숫자보다 없는 숫자.</div>
-    <div class="badge"><i></i> Z OS LIVE</div>
+    <div class="l1">숫자는 공개된 요약이에요. 이름과 성공률은 넣지 않아요.</div>
+    <div class="badge"><i></i> PROJECT Z</div>
     <div class="l2">PROJECT Z</div>
     <div class="visits" id="visitFoot">visits · Today 0 · All-time 0</div>
   </div>
@@ -266,13 +266,13 @@ async function load(){
     if(!d || !d.ok) throw new Error("feed");
     const agents=Number(d.agents)||0, live=Number(d.live)||0, today=Number(d.runs_today)||0;
     document.getElementById("brainDot").className = "dot on";
-    document.getElementById("brainTxt").textContent = "Z OS 연결";
+    document.getElementById("brainTxt").textContent = "연결됨";
     document.getElementById("updated").textContent = d.updated ? "갱신 "+String(d.updated).slice(11,16)+" UTC" : "";
     document.getElementById("sAgents").innerHTML = agents+'<em>명</em>';
-    document.getElementById("sActive").innerHTML = live+'<em>LIVE</em>';
+    document.getElementById("sActive").innerHTML = live+'<em>켜짐</em>';
     document.getElementById("sRuns").innerHTML = today+'<em>건</em>';
-    document.getElementById("desks").innerHTML = '<div class="rl">LIVE '+live+' · 전체 '+agents+'</div>';
-    document.getElementById("runs").innerHTML = '<div class="rl">오늘 실행 '+today+'건. 이름·성공률은 공개하지 않는다.</div>';
+    document.getElementById("desks").innerHTML = '<div class="rl">지금 '+live+' · 전체 '+agents+'</div>';
+    document.getElementById("runs").innerHTML = '<div class="rl">오늘 돌아간 일 '+today+'건. 이름은 공개하지 않아요.</div>';
     const f=d.founding;
     const fb=document.getElementById("foundingBar");
     if(fb&&f) fb.textContent=(f.label||"")+" · "+(f.note||"");
@@ -287,9 +287,8 @@ fetch("https://app.project-z.io/api/visit",{method:"POST",headers:{"content-type
   if(!d||!d.ok) return;
   const t=Number(d.today)||0, a=Number(d.all)||0;
   const el=document.getElementById("visitFoot");
-  if(el) el.textContent="visits · Today "+t+" · All-time "+a;
+  if(el) el.textContent="오늘 "+t+" · 지금까지 "+a;
 }).catch(()=>{});
-if("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(()=>{});
 </script>
 <div id="zosThm" role="group" aria-label="색상 테마">
 <button type="button" data-thm="light" aria-pressed="false" title="화이트">☀</button>
