@@ -214,7 +214,6 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
     <div class="stat g"><div class="k">지금 켜짐</div><div class="v" id="sActive">–</div></div>
     <div class="stat p"><div class="k">오늘 돌아간 일</div><div class="v" id="sRuns">–</div></div>
   </div>
-  <div id="foundingBar" class="rl" style="margin:8px 0 0;color:#ffc759;font-size:13px"></div>
 
   <div class="grid2">
     <div class="panel">
@@ -285,9 +284,6 @@ async function load(){
     document.getElementById("sRuns").innerHTML = today+'<em>건</em>';
     document.getElementById("desks").innerHTML = '<div class="rl">지금 '+live+' · 전체 '+agents+'</div>';
     document.getElementById("runs").innerHTML = '<div class="rl">오늘 돌아간 일 '+today+'건. 이름은 공개하지 않아요.</div>';
-    const f=d.founding;
-    const fb=document.getElementById("foundingBar");
-    if(fb&&f) fb.textContent=(f.label||"")+" · "+(f.note||"");
   }catch(e){
     waitCopy();
   }
