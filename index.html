@@ -48,15 +48,6 @@ html[data-theme="purple"]{
   --bad:#ff7a6b;--red:#ff7a6b;--unk:#705b9a;--blu:#9db4ff;
   --glow:rgba(160,107,255,.22);color-scheme:dark;
 }
-#zosThm{position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:3px;padding:3px;
-  border:1px solid var(--line2,#2a3358);border-radius:10px;background:var(--card,#101830);
-  box-shadow:0 6px 20px rgba(0,0,0,.30)}
-#zosThm button{font:inherit;font-size:13px;line-height:1;width:30px;height:26px;border:none;padding:0;
-  background:transparent;color:var(--dim,var(--tx3,#5d6a99));border-radius:7px;cursor:pointer}
-#zosThm button:hover{color:var(--txt,var(--tx,#eaeefc))}
-#zosThm button[aria-pressed="true"]{background:var(--card2,#1a2340);color:var(--pur,var(--ac2,#b48bff))}
-@media print{#zosThm{display:none}}
-
   html{scroll-behavior:smooth}
   body{
     font-family:'Apple SD Gothic Neo','Pretendard','Malgun Gothic',system-ui,sans-serif;
@@ -371,17 +362,5 @@ fetch("https://app.project-z.io/api/visit",{method:"POST",headers:{"content-type
   if(el) el.textContent="오늘 "+t+" · 지금까지 "+a;
 }).catch(()=>{});
 </script>
-<div id="zosThm" role="group" aria-label="색상 테마">
-<button type="button" data-thm="light" aria-pressed="false" title="화이트">☀</button>
-<button type="button" data-thm="dark" aria-pressed="false" title="블랙">●</button>
-<button type="button" data-thm="purple" aria-pressed="false" title="퍼플">✦</button>
-</div>
-<script>(function(){var K="zos-theme",d=document.documentElement;
-function paint(){var c=d.getAttribute("data-theme")||"dark";
-Array.prototype.forEach.call(document.querySelectorAll("#zosThm button"),function(b){
-b.setAttribute("aria-pressed",b.getAttribute("data-thm")===c?"true":"false")})}
-document.addEventListener("click",function(e){var t=e.target,b=t&&t.closest?t.closest("#zosThm button"):null;
-if(!b)return;var v=b.getAttribute("data-thm");d.setAttribute("data-theme",v);
-try{localStorage.setItem(K,v)}catch(x){}paint()});paint()})();</script>
 </body>
 </html>
