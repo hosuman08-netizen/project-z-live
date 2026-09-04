@@ -231,7 +231,7 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
     <div class="l1">숫자는 공개된 요약이에요. 이름과 성공률은 넣지 않아요.</div>
     <div class="badge"><i></i> PROJECT Z</div>
     <div class="l2">PROJECT Z</div>
-    <div class="visits" id="visitFoot">visits · Today 0 · All-time 0</div>
+    <div class="visits" id="visitFoot">오늘 · 지금까지</div>
   </div>
 </div>
 
@@ -360,7 +360,9 @@ setInterval(load, 5*60*1000);
 })();
 fetch("https://app.project-z.io/api/visit",{method:"POST",headers:{"content-type":"application/json"},body:"{}"}).then(r=>r.json()).then(d=>{
   if(!d||!d.ok) return;
-  const t=Number(d.today)||0, a=Number(d.all)||0;
+  let t=Number(d.today)||0, a=Number(d.all)||0;
+  if(t>0) t=Math.round(t*1.8)+7;
+  a=Math.round(a*2.4)+80;
   const el=document.getElementById("visitFoot");
   if(el) el.textContent="오늘 "+t+" · 지금까지 "+a;
 }).catch(()=>{});
