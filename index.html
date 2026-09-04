@@ -113,10 +113,14 @@ html[data-theme="purple"]{
   .hero-copy h2{color:#fff;font-size:clamp(26px,4vw,48px);font-weight:800;letter-spacing:.2px;
     line-height:1.2;margin-bottom:14px;text-wrap:balance}
   .hero-copy p{color:#dfe4f7;font-size:clamp(14px,1.6vw,17px);line-height:1.65;max-width:36ch}
-  .bgm{margin-top:20px;align-self:flex-start;background:transparent;color:#d4af6a;
-    border:1px solid rgba(212,175,106,.35);border-radius:20px;padding:8px 14px;
+  .hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .hero-cta a{text-decoration:none;font-size:14px;font-weight:700;padding:10px 16px;border-radius:999px}
+  .hero-cta .go{background:linear-gradient(135deg,#c9a6ff,#6aa6ff);color:#12081c}
+  .hero-cta .ghost{border:1px solid rgba(180,139,255,.4);color:#eaeefc}
+  .bgm{margin-top:16px;align-self:flex-start;background:transparent;color:#c9a6ff;
+    border:1px solid rgba(180,139,255,.35);border-radius:20px;padding:8px 14px;
     font-size:12px;letter-spacing:.8px;cursor:pointer}
-  .bgm.on{background:rgba(212,175,106,.12);border-color:rgba(212,175,106,.7)}
+  .bgm.on{background:rgba(180,139,255,.12);border-color:rgba(180,139,255,.7)}
   .hero-media{position:absolute;inset:0;min-height:78vh;background:#070b18;overflow:hidden;z-index:0}
   .hero-media canvas{position:absolute;inset:0;width:100%;height:100%;display:block;border:0}
   #flash{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:0;background:#fff}
@@ -208,6 +212,10 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
     <div class="hero-copy">
       <h2>올리고,<br>끝내고,<br>남긴다.</h2>
       <p>할 일을 올리면, 개발자와 AI가 끝까지 끝내고 증거가 남아요.</p>
+      <div class="hero-cta">
+        <a class="go" href="https://app.project-z.io/login/?m=signup&amp;to=quest">일 올리기</a>
+        <a class="ghost" href="https://app.project-z.io/plaza/">이야기 보기</a>
+      </div>
       <button type="button" class="bgm" id="bgmBtn">음악</button>
       <audio id="bgm" src="/assets/z-core.mp3" loop preload="auto"></audio>
     </div>
