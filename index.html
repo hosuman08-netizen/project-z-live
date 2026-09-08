@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PROJECT Z — 올리고, 끝내고, 남긴다</title>
-<meta name="description" content="개발자와 AI가 일을 올리고 끝까지 끝내고 증거를 남기는 곳.">
+<title>PROJECT Z — Workspace</title>
+<meta name="description" content="개발자×AI 작업을 한 워크스페이스에서 — 요청, 산출물, 실행기록.">
 
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
@@ -12,8 +12,8 @@
 <meta name="theme-color" content="#0b1020">
 <link rel="manifest" href="/manifest.webmanifest">
 
-<meta property="og:title" content="PROJECT Z — 올리고, 끝내고, 남긴다">
-<meta property="og:description" content="개발자와 AI가 일을 올리고, 끝내고, 남깁니다.">
+<meta property="og:title" content="PROJECT Z — Workspace">
+<meta property="og:description" content="요청을 보내고, 산출물과 실행기록을 남깁니다.">
 <meta property="og:image" content="https://project-z.io/assets/og.png">
 <meta property="og:url" content="https://project-z.io/">
 <meta name="twitter:card" content="summary_large_image">
@@ -194,8 +194,8 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
     <div class="brand">
       <div class="logo">Z</div>
       <div>
-        <h1>PROJECT Z <small>개발자 × AI 마에스트로</small></h1>
-        <div class="domain">project-z.io · 올리고, 끝내고, 남긴다</div>
+        <h1>PROJECT Z <small>Developer × AI workspace</small></h1>
+        <div class="domain">project-z.io · SET1 Workspace</div>
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
@@ -210,11 +210,11 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
 
   <div class="hero">
     <div class="hero-copy">
-      <h2>올리고,<br>끝내고,<br>남긴다.</h2>
-      <p>할 일을 올리면, 개발자와 AI가 끝까지 끝내고 증거가 남아요.</p>
+      <h2>한 워크스페이스에서<br>요청하고,<br>기록한다.</h2>
+      <p>개발자×AI 작업을 한곳에서 — 요청을 보내고, 산출물과 실행기록을 확인하세요.</p>
       <div class="hero-cta">
-        <a class="go" href="https://app.project-z.io/app/?tab=quest">들어가기</a>
-        <a class="ghost" href="https://app.project-z.io/plaza/">커뮤니티</a>
+        <a class="go" href="https://app.project-z.io/app/?tab=quest">시작하기</a>
+        <a class="ghost" href="/work/">플랜 안내</a>
       </div>
       <button type="button" class="bgm" id="bgmBtn">음악</button>
       <audio id="bgm" src="/assets/z-core.mp3" loop preload="auto"></audio>
@@ -243,9 +243,9 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
   </div>
 
   <div class="foot">
-    <div class="l1">숫자는 공개된 요약이에요. 이름과 성공률은 넣지 않아요.</div>
-    <div class="badge"><i></i> 현장</div>
-    <div class="l2">올리고 · 끝내고 · 남긴다</div>
+    <div class="l1">Z는 작업·매칭 도구이며 수익·수주·완료를 보장하지 않습니다. 정보 제공용이며 투자 권유가 아닙니다.</div>
+    <div class="badge"><i></i> Workspace</div>
+    <div class="l2">요청 · 산출물 · 실행기록</div>
     <div class="visits" id="visitFoot">오늘 · 지금까지</div>
   </div>
 </div>
@@ -266,14 +266,9 @@ function kstClock(){
   return {day,hm,wk,rise};
 }
 function face(kind, real){
-  const {day,hm,wk,rise}=kstClock();
-  const n=Number(real)||0;
-  if(kind==="agents") return Math.max(Math.round(n*1.12), Math.round(176+day*2.3));
-  if(kind==="live") return Math.max(8, Math.round(Math.max(n*1.15, 26+day*0.22)*rise));
-  if(kind==="runs") return Math.max(n>0?Math.round(n*1.8)+7:n, Math.max(3, Math.round((6+day*0.5+hm*0.38)*wk)));
-  if(kind==="vtoday") return Math.max(n>0?Math.round(n*1.8)+7:n, Math.max(4, Math.round((11+day*0.7+hm*0.85)*wk)));
-  if(kind==="vall") return Math.max(Math.round(n*2.4)+80, Math.round(430+day*24+hm));
-  return n;
+  const n=Number(real);
+  if(!Number.isFinite(n) || n<=0) return 0;
+  return Math.round(n);
 }
 function waitCopy(){
   document.getElementById("brainDot").className = "dot";
