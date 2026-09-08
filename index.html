@@ -461,6 +461,20 @@
       .cta-row { flex-direction: column; align-items: stretch; }
       .btn { width: 100%; }
     }
+
+    .live-strip{margin:36px 0 8px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+    .stat{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
+    .stat .k{font-size:12px;color:var(--dim)}
+    .stat .v{font-size:28px;font-weight:650;margin-top:6px;letter-spacing:-.5px}
+    .stat .v em{font-style:normal;font-size:13px;color:var(--muted);margin-left:6px;font-weight:500}
+    .visits{font-size:12px;color:var(--dim);margin-top:14px}
+    .brain{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+    .brain .dot{width:8px;height:8px;border-radius:50%;background:#5c6778;display:inline-block}
+    .brain .dot.on{background:#6ed6a6;box-shadow:0 0 10px rgba(110,214,166,.45)}
+    .brain .upd{font-size:11px;color:var(--dim)}
+    @media(max-width:720px){.stats{grid-template-columns:1fr}}
+
   </style>
 </head>
 <body data-lang="ko">
@@ -468,9 +482,9 @@
 
   <div class="shell">
 <nav class="nav" aria-label="Primary">
-      <a class="brand" href="#top" id="top">
+      <a class="brand" href="https://app.project-z.io/" id="top" aria-label="Z OS">
         <span class="mark">Z</span>
-        <span>Z</span>
+        <span>Z OS</span>
       </a>
       <div class="nav-actions">
         <div class="lang-toggle" role="group" aria-label="Language">
@@ -633,11 +647,23 @@
       </p>
     </section>
 
+    
+    <section class="live-strip" aria-label="공개 요약">
+      <div class="brain"><span class="dot" id="brainDot"></span><div><b id="brainTxt">상태 불러오는 중…</b><div class="upd" id="updated"></div></div></div>
+      <div class="stats">
+        <div class="stat"><div class="k">연결된 AI</div><div class="v" id="sAgents">–</div></div>
+        <div class="stat"><div class="k">지금 켜짐</div><div class="v" id="sActive">–</div></div>
+        <div class="stat"><div class="k">오늘 돌아간 일</div><div class="v" id="sRuns">–</div></div>
+      </div>
+      <div class="visits" id="visitFoot">오늘 방문자 · 지금까지</div>
+      <p class="visits">숫자는 공개 API 요약이에요. 이름·성공률은 넣지 않아요.</p>
+    </section>
+
     <footer>
       <div class="foot-top">
         <div class="foot-brand">
           <span class="mark">Z</span>
-          <span>Z</span>
+          <span>Z OS</span>
         </div>
         <a class="btn btn-ghost" href="https://app.project-z.io/" style="padding:8px 14px;font-size:13px">
           <span class="kr">시작하기</span>
@@ -670,5 +696,46 @@
       });
     })();
   </script>
+
+<script>
+async function loadSummary(){
+  const dot=document.getElementById('brainDot');
+  const txt=document.getElementById('brainTxt');
+  const upd=document.getElementById('updated');
+  const set=(id,html)=>{const el=document.getElementById(id); if(el) el.innerHTML=html;};
+  try{
+    const r=await fetch('https://app.project-z.io/api/public/summary?t='+Date.now());
+    if(!r.ok) throw new Error('summary');
+    const d=await r.json();
+    if(!d||!d.ok) throw new Error('summary');
+    const agents=Number(d.agents)||0, live=Number(d.live)||0, today=Number(d.runs_today)||0;
+    if(dot) dot.className='dot on';
+    if(txt) txt.textContent='연결됨';
+    if(upd) upd.textContent=d.updated?('갱신 '+String(d.updated).slice(11,16)+' UTC'):'';
+    set('sAgents', agents+'<em>명</em>');
+    set('sActive', live+'<em>켜짐</em>');
+    set('sRuns', today+'<em>건</em>');
+  }catch(e){
+    if(dot) dot.className='dot';
+    if(txt) txt.textContent='데이터 갱신 중';
+    if(upd) upd.textContent='';
+    set('sAgents','–'); set('sActive','–'); set('sRuns','–');
+  }
+}
+async function loadVisits(){
+  const el=document.getElementById('visitFoot');
+  if(!el) return;
+  try{
+    const r=await fetch('https://app.project-z.io/api/visit',{method:'POST',headers:{'content-type':'application/json'},body:'{}'});
+    const d=await r.json();
+    const t=Number(d.today)||0, a=Number(d.all)||0;
+    el.textContent='오늘 방문자 '+t+' · 지금까지 '+a;
+  }catch(e){ el.textContent='오늘 방문자 · 지금까지'; }
+}
+loadSummary();
+loadVisits();
+setInterval(loadSummary, 5*60*1000);
+</script>
+
 </body>
 </html>
