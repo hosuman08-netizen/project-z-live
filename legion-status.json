@@ -1,10 +1,16 @@
 {
-  "updated": "2026-08-22T18:00:03Z",
+  "updated": "2026-09-17T17:30:04Z",
   "brain": {
     "provider": "anthropic",
     "ok": true
   },
   "agents": [
+    {
+      "id": "notion-scribe",
+      "last_run": "2026-08-28T16:33:33Z",
+      "status": "UNVERIFIED",
+      "ok": false
+    },
     {
       "id": "core-graph",
       "last_run": "2026-08-20T05:04:45Z",
@@ -67,6 +73,16 @@
     }
   ],
   "runs": [
+    {
+      "run_id": "live-notion-scribe-20260829-013333",
+      "ts": "2026-08-28T16:33:33Z",
+      "agent": "notion-scribe",
+      "status": "UNVERIFIED",
+      "ok": false,
+      "hardcheck": "UNVERIFIED",
+      "evidence_count": 0,
+      "note": "agent"
+    },
     {
       "run_id": "graph-20260820-140445",
       "ts": "2026-08-20T05:04:45Z",

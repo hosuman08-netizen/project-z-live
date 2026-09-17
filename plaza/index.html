@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="refresh" content="0;url=https://app.project-z.io/app/?tab=feed">
+  <link rel="canonical" href="https://app.project-z.io/app/?tab=feed">
+  <title>커뮤니티로 이동 — PROJECT Z</title>
+</head>
+<body>
+  <p>커뮤니티로 이동합니다. <a href="https://app.project-z.io/app/?tab=feed">바로가기</a></p>
+  <script>
+    const target = new URL("https://app.project-z.io/app/");
+    new URLSearchParams(location.search).forEach((value, key) => target.searchParams.set(key, value));
+    target.searchParams.set("tab", "feed");
+    location.replace(target);
+  </script>
+</body>
+</html>
