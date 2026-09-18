@@ -6,3 +6,4 @@ cron.log
 .DS_Store
 .vscode/
 .idea/
+build-status.sh

@@ -2,9 +2,11 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>빌드 로그 — PROJECT Z</title>
-<meta name="description" content="1인 AI 군단이 하루하루 무엇을 지었는가 — 실측 기록만. 실패도 그대로.">
+<title>빌드 로그 — Project Z</title>
+<meta name="description" content="1인 AI 팀이 하루하루 무엇을 지었는가 — 실측 기록만. 실패도 그대로.">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   :root{
@@ -13,7 +15,7 @@
     --txt:#eaeefc;--mut:#8b97c4;--dim:#5d6a99;
     --grn:#3ddc97;--red:#ff5a5f;--blu:#6aa6ff;--pur:#b48bff;--gold:#ffc759;
   }
-/* ═══ Z OS 색상 테마 (화이트 / 블랙 / 퍼플) ═══ */
+/* ═══ Project Z 색상 테마 (화이트 / 블랙 / 퍼플) ═══ */
 html[data-theme="dark"]{color-scheme:dark}
 html[data-theme="light"]{
   --bg:#f6f7fb;--bg2:#edeef6;--card:#ffffff;--card2:#f3f4fa;
@@ -59,8 +61,7 @@ html[data-theme="purple"]{
   nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;gap:12px;flex-wrap:wrap}
   .back{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--mut);font-size:13px;transition:color .2s}
   .back:hover{color:var(--txt)}
-  .logo-s{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--pur),var(--blu));
-    display:grid;place-items:center;font-weight:900;font-size:16px;color:#0b1020;box-shadow:0 0 16px rgba(122,140,255,.4)}
+  .logo-s{width:28px;height:28px;border-radius:4px;flex:none;display:inline-block;background:url(/assets/brand/projectz-mark-dark.svg) center/contain no-repeat;color:transparent;font-size:0;box-shadow:none;border:0}
   .navlinks{display:flex;gap:8px}
   .navlinks a{font-size:12px;color:var(--blu);text-decoration:none;border:1px solid var(--line2);
     border-radius:20px;padding:7px 15px;transition:all .2s}
@@ -135,16 +136,16 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
 <div id="app"></div>
 <div class="wrap" id="legacy">
   <nav>
-    <a class="back" href="/"><span class="logo-s">Z</span> PROJECT Z</a>
+    <a class="back" href="/"><span class="logo-s">Z</span> Project Z</a>
     <div class="navlinks">
-      <a href="/">📡 라이브 보드</a>
+      <a href="/">라이브 보드</a>
       <a href="/work/">💼 일 맡기기</a>
     </div>
   </nav>
 
   <div class="hero">
     <h1>매일 무엇을 <span>실제로</span> 지었는가</h1>
-    <p>1인 + AI 군단의 작업 기록. 성공만 쓰지 않습니다 — 실패와 사고도 그대로 남깁니다.<br>기록은 실측 검증된 것만 올라갑니다.</p>
+    <p>1인 + AI 팀의 작업 기록. 성공만 쓰지 않습니다 — 실패와 사고도 그대로 남깁니다.<br>기록은 실측 검증된 것만 올라갑니다.</p>
   </div>
 
   <div class="kpis">
@@ -191,7 +192,7 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
       <span class="t">보드 공개</span>
     </div>
     <div class="items">
-      <div class="it"><b>📡 라이브 관제 보드 공개</b>
+      <div class="it"><b>라이브 관제 보드 공개</b>
         <p>에이전트 실행 기록에서 상태 페이지를 자동 생성하도록 배선. 30분마다 갱신되고, 내용이 바뀔 때만 반영합니다. 시크릿·개인정보는 생성 단계에서 제거.</p></div>
       <div class="it"><b>🧠 두뇌 정상화</b>
         <p>모델 지정 오류로 호출이 실패하던 문제 해결. 코어 에이전트 실소환 성공 확인.</p></div>
@@ -203,8 +204,8 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
   </div>
 
   <div class="foot">
-    이 로그는 <a href="/">실가동 중인 AI 군단</a>의 작업 기록입니다 · 연출 아님, 실측<br>
-    PROJECT Z · 정직 &gt; 연기
+    이 로그는 <a href="/">실가동 중인 AI 팀</a>의 작업 기록입니다 · 연출 아님, 실측<br>
+    Project Z · 정직 &gt; 연기
   </div>
 </div>
 <script>
@@ -227,7 +228,7 @@ function draw(){
 }
 async function boot(){
   const app=document.querySelector('#app');
-  app.innerHTML=`<div class="livebar"><a href="/">← PROJECT Z</a><div><span class="live-dot" id="dot"></span><b>실측 실행 로그</b><div class="source" id="source">legion-status.json 불러오는 중…</div></div></div><div class="hero"><h1>실제로 <span>실행된 것</span>만 기록한다</h1><p>run_id · hardcheck · EvidenceReport를 기준으로 생성된 공개 로그입니다.<br>증거가 없으면 성공으로 표시하지 않습니다.</p></div><div class="kpis"><div class="kpi b"><div class="v" id="kTotal">–</div><div class="k">실행</div></div><div class="kpi g"><div class="v" id="kPass">–</div><div class="k">검증 통과</div></div><div class="kpi p"><div class="v" id="kEvidence">–</div><div class="k">Evidence 있음</div></div><div class="kpi gold"><div class="v" id="kUnverified">–</div><div class="k">미검증</div></div></div><div class="filters"><button data-filter="all" onclick="filter='all';draw()">전체</button><button data-filter="PASS" onclick="filter='PASS';draw()">통과</button><button data-filter="FAIL" onclick="filter='FAIL';draw()">실패</button><button data-filter="UNVERIFIED" onclick="filter='UNVERIFIED';draw()">미검증</button><button data-filter="BLOCKED" onclick="filter='BLOCKED';draw()">차단됨</button></div><section class="runlist" id="runs"><div class="empty">데이터 대기 중…</div></section><div class="foot">공개 로그에는 정화된 요약만 표시됩니다 · 내부 경로·개인정보·시크릿은 노출하지 않습니다<br><a href="/">PROJECT Z</a> · 정직 &gt; 연기</div>`;
+  app.innerHTML=`<div class="livebar"><a href="/">← Project Z</a><div><span class="live-dot" id="dot"></span><b>실측 실행 로그</b><div class="source" id="source">실행 로그 불러오는 중…</div></div></div><div class="hero"><h1>실제로 <span>실행된 것</span>만 기록한다</h1><p>run_id · hardcheck · EvidenceReport를 기준으로 생성된 공개 로그입니다.<br>증거가 없으면 성공으로 표시하지 않습니다.</p></div><div class="kpis"><div class="kpi b"><div class="v" id="kTotal">–</div><div class="k">실행</div></div><div class="kpi g"><div class="v" id="kPass">–</div><div class="k">검증 통과</div></div><div class="kpi p"><div class="v" id="kEvidence">–</div><div class="k">Evidence 있음</div></div><div class="kpi gold"><div class="v" id="kUnverified">–</div><div class="k">미검증</div></div></div><div class="filters"><button data-filter="all" onclick="filter='all';draw()">전체</button><button data-filter="PASS" onclick="filter='PASS';draw()">통과</button><button data-filter="FAIL" onclick="filter='FAIL';draw()">실패</button><button data-filter="UNVERIFIED" onclick="filter='UNVERIFIED';draw()">미검증</button><button data-filter="BLOCKED" onclick="filter='BLOCKED';draw()">차단됨</button></div><section class="runlist" id="runs"><div class="empty">데이터 대기 중…</div></section><div class="foot">공개 로그에는 정화된 요약만 표시됩니다 · 내부 경로·개인정보·시크릿은 노출하지 않습니다<br><a href="/">Project Z</a> · 정직 &gt; 연기</div>`;
   try{const r=await fetch('../legion-status.json?t='+Date.now());if(!r.ok)throw Error('feed');const d=await r.json();allRuns=(d.runs||[]).map(x=>({...x,status:x.status||(x.ok?'PASS':'UNVERIFIED')}));document.querySelector('#source').textContent=`마지막 갱신 ${fmt(d.updated)} · ${allRuns.length}건`;if(!allRuns.length)document.querySelector('#dot').classList.add('warn');draw()}catch(e){document.querySelector('#source').textContent='공개 피드를 불러오지 못했습니다';document.querySelector('#dot').classList.add('warn');document.querySelector('#runs').innerHTML='<div class="empty">현재 실행 피드를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.</div>'}
 }
 boot();
