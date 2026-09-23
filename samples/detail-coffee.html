@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>온새미로 원두 정기배송</title>
+<meta name="description" content="AI 콘텐츠 대행 데모용 스마트스토어형 상세페이지 샘플 (가상 브랜드)">
+<meta name="robots" content="noindex, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --ink:#2b1d16; --ink-2:#5a4a41; --ink-3:#8a7a71;
+    --paper:#faf6f1; --paper-2:#f1e9e0; --line:#e3d8cc;
+    --copper:#b5652e; --copper-deep:#8e4a1c; --moss:#4f6b4a;
+    --radius:14px; --gutter:20px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#f3ebe3; --ink-2:#cdbfb3; --ink-3:#9c8d82;
+      --paper:#1b1512; --paper-2:#251d19; --line:#3a2f29;
+      --copper:#d98a4f; --copper-deep:#e9a26b; --moss:#8fb08a;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#f3ebe3; --ink-2:#cdbfb3; --ink-3:#9c8d82;
+    --paper:#1b1512; --paper-2:#251d19; --line:#3a2f29;
+    --copper:#d98a4f; --copper-deep:#e9a26b; --moss:#8fb08a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .page{max-width:480px;margin:0 auto;padding-bottom:96px}
+  h1,h2,h3{font-family:"Noto Serif KR",serif;text-wrap:balance;margin:0;letter-spacing:-.01em}
+  p{margin:0}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);font-weight:700}
+  section{padding:40px var(--gutter)}
+  section + section{border-top:1px solid var(--line)}
+
+  /* hero */
+  .hero{padding:28px var(--gutter) 36px;display:grid;gap:18px}
+  .hero-art{aspect-ratio:1/1;border-radius:var(--radius);background:
+      radial-gradient(120% 80% at 20% 15%, #d9b48c 0%, transparent 55%),
+      radial-gradient(90% 70% at 85% 90%, #6d3b1f 0%, transparent 60%),
+      linear-gradient(160deg,#3a2419,#7a4a2b);position:relative;overflow:hidden}
+  .hero-art::after{content:"";position:absolute;inset:auto 14% 12% 14%;height:38%;border-radius:50% 50% 12px 12px;background:rgba(250,246,241,.14);filter:blur(1px)}
+  .hero-art .tag{position:absolute;left:14px;top:14px;background:var(--paper);color:var(--ink);font-size:12px;font-weight:700;padding:6px 10px;border-radius:999px}
+  .hero h1{font-size:28px;line-height:1.25}
+  .hero .sub{color:var(--ink-2);font-size:16px}
+  .price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .price strong{font-size:26px;font-variant-numeric:tabular-nums}
+  .price span{color:var(--ink-3);font-size:14px}
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .facts div{background:var(--paper-2);border-radius:10px;padding:10px 8px;text-align:center}
+  .facts b{display:block;font-size:15px}
+  .facts small{color:var(--ink-3);font-size:12px}
+
+  /* benefits */
+  .benefits{display:grid;gap:14px;margin-top:18px}
+  .benefit{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+  .benefit .ico{width:44px;height:44px;border-radius:12px;background:var(--paper-2);display:grid;place-items:center;color:var(--copper);font-family:"Noto Serif KR",serif;font-weight:700}
+  .benefit h3{font-size:16px;margin-bottom:2px}
+  .benefit p{color:var(--ink-2);font-size:14px}
+
+  /* steps */
+  .steps{display:grid;gap:0;margin-top:18px;counter-reset:s}
+  .step{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:14px 0;border-top:1px dashed var(--line)}
+  .step:first-child{border-top:0}
+  .step .n{width:28px;height:28px;border-radius:50%;background:var(--copper);color:#fff;font-size:13px;font-weight:700;display:grid;place-items:center}
+  .step h3{font-size:15px}
+  .step p{font-size:14px;color:var(--ink-2)}
+
+  /* spec table */
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:16px}
+  th,td{text-align:left;padding:10px 0;border-bottom:1px solid var(--line);vertical-align:top}
+  th{width:34%;color:var(--ink-3);font-weight:500}
+
+  /* faq */
+  details{border-top:1px solid var(--line);padding:12px 0}
+  details:last-of-type{border-bottom:1px solid var(--line)}
+  summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  summary::after{content:"+";color:var(--copper);font-weight:700}
+  details[open] summary::after{content:"–"}
+  details p{padding-top:8px;color:var(--ink-2);font-size:14px}
+
+  /* trust */
+  .trust{background:var(--paper-2);border-radius:var(--radius);padding:18px;display:grid;gap:10px;margin-top:16px}
+  .trust p{font-size:14px;color:var(--ink-2)}
+  .trust b{color:var(--ink)}
+
+  /* sticky cta */
+  .cta{position:fixed;left:0;right:0;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom))}
+  .cta .in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .btn{height:48px;border-radius:12px;font-size:15px;font-weight:700;display:grid;place-items:center;text-decoration:none;border:1px solid var(--line);color:var(--ink);background:var(--paper)}
+  .btn.primary{background:var(--copper);border-color:var(--copper);color:#fff}
+  .btn:focus-visible{outline:3px solid var(--moss);outline-offset:2px}
+  .note{font-size:12px;color:var(--ink-3);text-align:center;padding:24px var(--gutter) 0}
+  .note a{color:var(--copper)}
+  @media (prefers-reduced-motion:no-preference){ details p{animation:fade .2s ease} }
+  @keyframes fade{from{opacity:0;transform:translateY(-2px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <section class="hero">
+    <div class="hero-art" role="img" aria-label="갓 볶은 원두가 담긴 봉투 일러스트"><span class="tag">로스팅 후 3일 내 발송</span></div>
+    <div>
+      <p class="eyebrow">Onsaemiro Roastery · 정기배송</p>
+      <h1>아침이 기다려지는 원두,<br>2주마다 문 앞으로.</h1>
+    </div>
+    <p class="sub">소량 로스팅한 원두를 로스팅 날짜 그대로 보내드립니다. 취향 설문 한 번이면 다음 봉투부터 당신 쪽으로 맞춰갑니다.</p>
+    <div class="price"><strong>16,900원</strong><span>200g · 2주 1회 · 배송비 포함</span></div>
+    <div class="facts">
+      <div><b>200g</b><small>약 14잔</small></div>
+      <div><b>2주</b><small>배송 주기</small></div>
+      <div><b>언제든</b><small>건너뛰기·해지</small></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">왜 정기배송인가</p>
+    <h2 style="font-size:22px;margin-top:6px">사놓고 묵히는 원두가 사라집니다</h2>
+    <div class="benefits">
+      <div class="benefit"><div class="ico">日</div><div><h3>로스팅 날짜를 봉투에 적어 보냅니다</h3><p>가장 맛있는 기간(로스팅 후 4~21일)에 마시도록 발송일을 맞춥니다.</p></div></div>
+      <div class="benefit"><div class="ico">味</div><div><h3>3봉투 안에 취향을 찾아드립니다</h3><p>첫 설문 + 매회 30초 피드백으로 산미·바디·로스팅 정도를 조정합니다.</p></div></div>
+      <div class="benefit"><div class="ico">量</div><div><h3>200g, 딱 2주 분량</h3><p>하루 한 잔 기준으로 남지도 모자라지도 않게 계산한 양입니다.</p></div></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">이용 방법</p>
+    <h2 style="font-size:22px;margin-top:6px">세 번 고르면 끝</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div><h3>취향 설문 (1분)</h3><p>평소 마시는 커피, 우유 여부, 추출 도구를 고릅니다.</p></div></div>
+      <div class="step"><div class="n">2</div><div><h3>첫 봉투 도착</h3><p>로스팅 후 3일 내 발송. 분쇄 여부는 도구에 맞춰 선택.</p></div></div>
+      <div class="step"><div class="n">3</div><div><h3>30초 피드백</h3><p>"더 고소하게 / 이대로 / 더 산뜻하게" 중 하나만 누르면 다음 봉투에 반영.</p></div></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">상품 정보</p>
+    <h2 style="font-size:22px;margin-top:6px">이번 달 원두</h2>
+    <table>
+      <tr><th>원두</th><td>에티오피아 구지 워시드 + 브라질 세하도 블렌드</td></tr>
+      <tr><th>로스팅</th><td>미디엄 (아그트론 60 내외)</td></tr>
+      <tr><th>컵노트</th><td>살구, 흑설탕, 깔끔한 여운</td></tr>
+      <tr><th>중량 / 포장</th><td>200g · 아로마 밸브 봉투 · 질소 충전</td></tr>
+      <tr><th>분쇄</th><td>홀빈 / 핸드드립 / 에스프레소 / 모카포트 중 선택</td></tr>
+      <tr><th>배송</th><td>격주 화요일 로스팅 → 목요일 출고 (택배)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <p class="eyebrow">자주 묻는 질문</p>
+    <div style="margin-top:14px">
+      <details><summary>다음 배송을 한 번 건너뛸 수 있나요?</summary><p>네. 출고 이틀 전까지 마이페이지에서 건너뛰기를 누르면 그 회차는 결제·발송되지 않습니다.</p></details>
+      <details><summary>해지에 조건이 있나요?</summary><p>없습니다. 최소 이용 기간 없이 언제든 해지할 수 있고, 이미 출고된 회차만 정산됩니다.</p></details>
+      <details><summary>원두가 취향에 안 맞으면요?</summary><p>피드백에 "안 맞아요"를 누르면 다음 봉투를 다른 산지로 바꿔 보내고, 첫 3회 안이면 그 회차 금액을 돌려드립니다.</p></details>
+      <details><summary>선물로 보낼 수 있나요?</summary><p>배송지를 다르게 지정하면 됩니다. 봉투에 가격은 표시되지 않습니다.</p></details>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">약속</p>
+    <div class="trust">
+      <p><b>로스팅 날짜 표기</b> — 모든 봉투에 로스팅한 날짜를 적습니다.</p>
+      <p><b>첫 3회 환불</b> — 취향에 안 맞으면 해당 회차 금액을 돌려드립니다.</p>
+      <p><b>문의 응답</b> — 평일 오전 10시부터 오후 6시, 채널톡으로 당일 답합니다.</p>
+    </div>
+  </section>
+
+  <p class="note">샘플 페이지 · 가상 브랜드 ‘온새미로’ · AI 콘텐츠 대행 데모용 (실제 판매 페이지 아님)<br><a href="/work/">← 가격·주문 보기</a></p>
+</main>
+
+<div class="cta"><div class="in">
+  <a class="btn" href="#" aria-label="한 봉투만 먼저 받아보기">한 봉투만 먼저</a>
+  <a class="btn primary" href="#" aria-label="정기배송 시작하기">정기배송 시작</a>
+</div></div>
+</body>
+</html>
