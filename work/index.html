@@ -12,7 +12,7 @@
   :root{
     --bg:#070b18;--card:rgba(22,31,66,.62);--card2:rgba(28,38,79,.7);
     --line:rgba(106,166,255,.14);--line2:rgba(106,166,255,.28);
-    --txt:#eaeefc;--mut:#8b97c4;--dim:#5d6a99;
+    --txt:#eaeefc;--mut:#8b97c4;--dim:#7782a9;
     --grn:#3ddc97;--blu:#6aa6ff;--pur:#b48bff;--gold:#ffc759;
   }
 /* ═══ Project Z 색상 테마 (화이트 / 블랙 / 퍼플) ═══ */
@@ -41,7 +41,7 @@ html[data-theme="purple"]{
   border:1px solid var(--line2,#2a3358);border-radius:10px;background:var(--card,#101830);
   box-shadow:0 6px 20px rgba(0,0,0,.30)}
 #zosThm button{font:inherit;font-size:13px;line-height:1;width:30px;height:26px;border:none;padding:0;
-  background:transparent;color:var(--dim,var(--tx3,#5d6a99));border-radius:7px;cursor:pointer}
+  background:transparent;color:var(--dim,var(--tx3,#7782a9));border-radius:7px;cursor:pointer}
 #zosThm button:hover{color:var(--txt,var(--tx,#eaeefc))}
 #zosThm button[aria-pressed="true"]{background:var(--card2,#1a2340);color:var(--pur,var(--ac2,#b48bff))}
 @media print{#zosThm{display:none}}
@@ -101,7 +101,7 @@ html[data-theme="purple"]{
   .samples{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
   .smp{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:17px 18px}
   .smp .cat{font-size:11px;color:var(--blu);letter-spacing:1px;margin-bottom:7px;font-weight:700}
-  .smp h4{font-size:15px;margin-bottom:8px;line-height:1.45}
+  .smp h3{font-size:15px;margin-bottom:8px;line-height:1.45}
   .smp p{font-size:12.5px;color:var(--mut);line-height:1.7}
 
   .how{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -124,7 +124,7 @@ html[data-theme="purple"]{
   .cta .sub{font-size:11px;color:var(--dim);margin-top:14px}
 
   .foot{margin-top:40px;text-align:center;font-size:11px;color:var(--dim);line-height:1.8}
-  .foot a{color:var(--mut);text-decoration:none}
+  .foot a{color:var(--mut);text-decoration:underline;text-underline-offset:2px}
 
   @media(max-width:760px){
     .svc{grid-template-columns:1fr}.samples{grid-template-columns:1fr}
@@ -170,13 +170,13 @@ document.documentElement.setAttribute("data-theme",t)})();</script>
 
   <h2 class="sec">샘플 미리보기</h2>
   <div class="samples">
-    <div class="smp"><div class="cat">🐕 반려동물</div><h4>"소파에서 뛰어내리는 그 순간이, 관절에는 사고입니다"</h4>
+    <div class="smp"><div class="cat">🐕 반려동물</div><h3>"소파에서 뛰어내리는 그 순간이, 관절에는 사고입니다"</h3>
       <p>공포 소구 → 원인 설명 → 제품이 끊는 지점 → 후기 신뢰. 반려동물 계단 상세페이지 풀버전 보유.</p></div>
-    <div class="smp"><div class="cat">🧶 패션·의류</div><h4>"예쁜데 목이 늘어나는" 니트, 이제 그만</h4>
+    <div class="smp"><div class="cat">🧶 패션·의류</div><h3>"예쁜데 목이 늘어나는" 니트, 이제 그만</h3>
       <p>누구나 겪은 불편 → 이중 리브 편직이라는 근거 → 4계절 활용성. 기능성 소재를 일상 언어로.</p></div>
-    <div class="smp"><div class="cat">💊 건강기능식품</div><h4>아침마다 화장실이 불편하다면, 균부터 바꾸세요</h4>
+    <div class="smp"><div class="cat">💊 건강기능식품</div><h3>아침마다 화장실이 불편하다면, 균부터 바꾸세요</h3>
       <p>표시광고법 준수 톤("도움을 줄 수 있음") 유지하면서도 팔리는 구조. 장용성 코팅·CFU 보장 등 근거 중심.</p></div>
-    <div class="smp"><div class="cat">💧 뷰티</div><h4>겉만 촉촉, 속은 당기는 피부에게</h4>
+    <div class="smp"><div class="cat">💧 뷰티</div><h3>겉만 촉촉, 속은 당기는 피부에게</h3>
       <p>30분 뒤 당김이라는 구체적 순간 포착 → 5중 히알루론산 근거 → 민감성 테스트 신뢰 장치.</p></div>
   </div>
 

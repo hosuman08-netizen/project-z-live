@@ -31,7 +31,7 @@
       --border-strong: rgba(255, 255, 255, 0.12);
       --text: #f4f4f5;
       --muted: #a1a1aa;
-      --dim: #71717a;
+      --dim: #7f7f87;
       --accent: #5EEAD4;
       --accent-soft: rgba(94, 234, 212, 0.12);
       --accent-border: rgba(94, 234, 212, 0.35);
@@ -42,6 +42,8 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    [hidden] { display: none !important; }
 
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
@@ -505,7 +507,7 @@
       <span class="en" id="foundingEn"></span>
     </a>
 <nav class="nav" aria-label="Primary">
-      <a class="brand" href="https://app.project-z.io/" id="top" aria-label="Project Z">
+      <a class="brand" href="https://app.project-z.io/" id="top">
         <span class="mark" aria-hidden="true">Z</span>
         <span>Project Z</span>
       </a>
@@ -688,6 +690,8 @@
 
 <script>
 const API = 'https://app.project-z.io/api/public';
+// 공개 API 가 한 번에 주는 최대 건수. 이 수만큼 오면 "그 이상"이라는 뜻이라 N+ 로 적는다.
+const QUESTS_MAX = 10;
 const esc = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const setHtml = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
 
@@ -739,7 +743,7 @@ async function loadRequests() {
   if (!panel || !list) return;
   try {
     const [qr, dr] = await Promise.all([
-      fetch(API + '/quests?t=' + Date.now()),
+      fetch(API + '/quests?n=' + QUESTS_MAX + '&t=' + Date.now()),
       fetch(API + '/recent-done?t=' + Date.now()),
     ]);
     if (!qr.ok) throw new Error('quests');
@@ -754,7 +758,8 @@ async function loadRequests() {
     }
 
     const open = qd.quests.filter((q) => q && q.status === 'OPEN');
-    setHtml('sOpen', open.length + '<em>건</em>');
+    const openLabel = open.length >= QUESTS_MAX ? QUESTS_MAX + '+' : String(open.length);
+    setHtml('sOpen', openLabel + '<em>건</em>');
     setHtml('sDone', done + '<em>건</em>');
 
     const top = open.slice(0, 3);
