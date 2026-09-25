@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-25T17:00:04Z",
+  "updated": "2026-09-25T17:15:49Z",
   "brain": {
     "provider": "anthropic",
     "ok": true
@@ -433,5 +433,7 @@
       "evidence_count": 0,
       "note": "agent"
     }
-  ]
+  ],
+  "mac_alive": "2026-09-26 02:15:49",
+  "publish_ok": true
 }
