@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-28T11:30:03Z",
+  "updated": "2026-09-28T12:00:03Z",
   "brain": {
     "provider": "anthropic",
     "ok": true
@@ -434,7 +434,7 @@
       "note": "agent"
     }
   ],
-  "mac_alive": "2026-09-28 20:30:03",
+  "mac_alive": "2026-09-28 21:00:04",
   "publish_ok": true,
   "im": {
     "equity": 99950.25,
@@ -442,5 +442,12 @@
     "signal": "BUY",
     "halt": true,
     "updated_at": "2026-09-28T16:33:22.748284+09:00"
+  },
+  "eureka": {
+    "health": "정지의심(마지막루프 5분+ 경과)",
+    "members": "4",
+    "halts": "3",
+    "last_loop": "2026-09-28 18:55:41",
+    "error": "없음"
   }
 }
