@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-28T07:30:04Z",
+  "updated": "2026-09-28T08:00:03Z",
   "brain": {
     "provider": "anthropic",
     "ok": true
@@ -434,6 +434,13 @@
       "note": "agent"
     }
   ],
-  "mac_alive": "2026-09-28 16:30:04",
-  "publish_ok": true
+  "mac_alive": "2026-09-28 17:00:03",
+  "publish_ok": true,
+  "im": {
+    "equity": 99950.25,
+    "position": "SPY",
+    "signal": "BUY",
+    "halt": false,
+    "updated_at": "2026-09-28T16:33:22.748284+09:00"
+  }
 }
