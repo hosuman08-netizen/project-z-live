@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30T04:30:08Z",
+  "updated": "2026-09-30T05:00:05Z",
   "brain": {
     "provider": "anthropic",
     "ok": true
@@ -434,7 +434,7 @@
       "note": "agent"
     }
   ],
-  "mac_alive": "2026-09-30 13:30:08",
+  "mac_alive": "2026-09-30 14:00:06",
   "publish_ok": true,
   "im": {
     "equity": 99950.25,
@@ -445,7 +445,7 @@
   },
   "eureka": {
     "health": "정지의심(마지막루프 5분+ 경과)",
-    "members": "4",
+    "members": "5",
     "halts": "3",
     "last_loop": "2026-09-28 18:55:41",
     "error": "없음"
